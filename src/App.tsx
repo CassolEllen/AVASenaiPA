@@ -10,6 +10,7 @@ import Mensagens from "./pages/Mensagens";
 import Calendario from "./pages/Calendario";
 import Perfil from "./pages/Perfil";
 import Configuracoes from "./pages/Configuracoes";
+import Notificacoes from "./pages/Notificacoes";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="mensagens" element={<Mensagens />} />
           <Route path="calendario" element={<Calendario />} />
           <Route path="perfil" element={<Perfil />} />
+          <Route path="notificacoes" element={<Notificacoes />} />
           <Route path="configuracoes" element={<Configuracoes />} />
         </Route>
       </Routes>
