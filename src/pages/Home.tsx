@@ -1,105 +1,274 @@
-import { BookOpen, ClipboardList, Clock, TrendingUp } from "lucide-react";
+import {
+  BookOpen,
+  CalendarDays,
+  ClipboardList,
+  MessageCircle,
+  Video,
+  ArrowRight,
+  TrendingUp,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
+const proximasAulas = [
+  {
+    materia: "Banco de Dados",
+    data: "28/04/2026",
+    hora: "10:00 - 11:40",
+    tipo: "Online",
+    meetUrl: "https://meet.google.com/sql-pratica",
+  },
+  {
+    materia: "Redes de Computadores",
+    data: "29/04/2026",
+    hora: "14:00 - 15:40",
+    tipo: "Online",
+    meetUrl: "https://meet.google.com/redes-computadores",
+  },
+  {
+    materia: "Desenvolvimento Web",
+    data: "30/04/2026",
+    hora: "08:00 - 09:40",
+    tipo: "Presencial",
+    local: "Laboratório 1",
+  },
+];
+
+const atividadesPendentes = [
+  {
+    titulo: "Trabalho Prático de Listas Encadeadas",
+    disciplina: "Estrutura de Dados",
+    prazo: "01/06/2026",
+  },
+  {
+    titulo: "Atividade Prática - Falhas de Implantação",
+    disciplina: "Implantação de Sistemas",
+    prazo: "05/06/2026",
+  },
+];
+
+const mensagensRecentes = [
+  {
+    nome: "Sistema AVA",
+    texto: "Você possui uma atividade pendente para amanhã.",
+  },
+  {
+    nome: "Prof. Doglas André Finco",
+    texto: "Pode me enviar sua dúvida por aqui.",
+  },
+];
 
 export default function Home() {
+  const navigate = useNavigate();
+
   return (
     <div className="max-w-[1400px] mx-auto space-y-6">
-      <section className="rounded-2xl bg-gradient-to-r from-[#1d4ed8] to-[#06b6d4] text-white p-8 shadow-lg">
-        <div className="flex items-center justify-between">
+      <section className="rounded-3xl bg-gradient-to-r from-blue-700 to-cyan-500 text-white p-8 shadow-[0_8px_30px_rgba(15,23,42,0.12)]">
+        <div className="flex justify-between items-center gap-6">
           <div>
-            <p className="text-sm opacity-90">Bom dia, Ellen 👋 · Nível 4</p>
-            <h1 className="text-3xl font-bold mt-1">Ellen – Destaque 🏅</h1>
-
-            <div className="mt-5 h-2 bg-white/20 rounded-full overflow-hidden">
-              <div className="h-full w-[78%] bg-white rounded-full" />
-            </div>
-
-            <p className="mt-2 text-sm opacity-90">260 XP para o próximo nível</p>
+            <p className="text-sm opacity-90">Bem-vinda de volta 👋</p>
+            <h1 className="text-3xl font-bold mt-1">
+              Ellen, continue sua jornada no AVA
+            </h1>
+            <p className="text-sm opacity-90 mt-2">
+              Acompanhe suas aulas, atividades, mensagens e progresso em um só lugar.
+            </p>
           </div>
 
-          <div className="text-right">
-            <p className="text-4xl font-bold">1240</p>
-            <p className="text-sm">XP</p>
+          <div className="bg-white/20 rounded-2xl p-5 text-center min-w-[160px]">
+            <p className="text-4xl font-bold">72%</p>
+            <p className="text-sm opacity-90">progresso geral</p>
           </div>
         </div>
       </section>
 
-      <section className="grid grid-cols-4 gap-4">
-        <InfoCard icon={<BookOpen size={22} />} value="2" label="Cursos Ativos" />
-        <InfoCard icon={<ClipboardList size={22} />} value="3" label="Atividades Pendentes" />
-        <InfoCard icon={<TrendingUp size={22} />} value="8.4" label="Média Geral" />
-        <InfoCard icon={<Clock size={22} />} value="Seg 08h" label="Próxima Aula" />
+      <section className="grid grid-cols-4 gap-5">
+        <DashboardCard
+          icon={<BookOpen size={22} />}
+          title="Cursos"
+          value="1 ativo"
+          description="ADS em andamento"
+          color="blue"
+          onClick={() => navigate("/cursos")}
+        />
+
+        <DashboardCard
+          icon={<CalendarDays size={22} />}
+          title="Próxima aula"
+          value="Hoje"
+          description="Banco de Dados · 10:00"
+          color="green"
+          onClick={() => navigate("/aulas")}
+        />
+
+        <DashboardCard
+          icon={<ClipboardList size={22} />}
+          title="Atividades"
+          value="2 pendentes"
+          description="1 enviada recentemente"
+          color="yellow"
+          onClick={() => navigate("/atividades")}
+        />
+
+        <DashboardCard
+          icon={<MessageCircle size={22} />}
+          title="Mensagens"
+          value="2 recentes"
+          description="Professores e lembretes"
+          color="purple"
+          onClick={() => navigate("/mensagens")}
+        />
       </section>
 
       <section className="grid grid-cols-[2fr_1fr] gap-6">
         <div className="space-y-6">
-          <div>
-            <div className="flex justify-between items-center mb-3">
-              <h2 className="text-xl font-bold">Próximas Aulas</h2>
-              <button className="text-blue-700 font-semibold text-sm">Ver todas</button>
+          <div className="bg-white rounded-3xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h2 className="text-xl font-bold">Próximas aulas</h2>
+                <p className="text-sm text-slate-500">
+                  Acompanhe os próximos encontros do curso
+                </p>
+              </div>
+
+              <button
+                onClick={() => navigate("/calendario")}
+                className="text-blue-700 text-sm font-semibold flex items-center gap-1"
+              >
+                Ver calendário
+                <ArrowRight size={15} />
+              </button>
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
-              <ClassCard title="Estrutura de Dados" time="Segunda · 08:00 - 09:40" type="Presencial" />
-              <ClassCard title="Banco de Dados" time="Segunda · 10:00 - 11:40" type="Online" />
-              <ClassCard title="Engenharia de Software" time="Terça · 08:00 - 09:40" type="Presencial" />
+            <div className="space-y-3">
+              {proximasAulas.map((aula) => (
+                <div
+                  key={`${aula.materia}-${aula.data}`}
+                  className="flex items-center justify-between rounded-2xl bg-slate-50 p-4 hover:bg-slate-100 transition"
+                >
+                  <div>
+                    <p className="font-bold">{aula.materia}</p>
+                    <p className="text-sm text-slate-500">
+                      {aula.data} · {aula.hora}
+                    </p>
+                  </div>
+
+                  {aula.tipo === "Online" ? (
+                    <a
+                      href={aula.meetUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 hover:bg-blue-800 transition"
+                    >
+                      <Video size={16} />
+                      Entrar
+                    </a>
+                  ) : (
+                    <span className="bg-green-100 text-green-700 px-4 py-2 rounded-xl text-sm font-semibold">
+                      {aula.local}
+                    </span>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
 
-          <div>
-            <h2 className="text-xl font-bold mb-3">Continue de onde parou</h2>
-
-            <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.05)] flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-full border-4 border-blue-700 flex items-center justify-center font-bold">
-                  78%
-                </div>
-
-                <div>
-                  <h3 className="font-bold">Estrutura de Dados</h3>
-                  <p className="text-sm text-slate-500">Prof. Carlos Souza</p>
-                </div>
+          <div className="bg-white rounded-3xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h2 className="text-xl font-bold">Atividades pendentes</h2>
+                <p className="text-sm text-slate-500">
+                  Priorize entregas próximas do prazo
+                </p>
               </div>
 
-              <button className="bg-blue-700 text-white px-6 py-2 rounded-xl font-semibold">
-                Continuar
+              <button
+                onClick={() => navigate("/atividades")}
+                className="text-blue-700 text-sm font-semibold flex items-center gap-1"
+              >
+                Ver atividades
+                <ArrowRight size={15} />
               </button>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {atividadesPendentes.map((atividade) => (
+                <div
+                  key={atividade.titulo}
+                  className="rounded-2xl border border-slate-100 p-4 hover:shadow-sm transition"
+                >
+                  <span className="text-xs bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full font-semibold">
+                    Pendente
+                  </span>
+
+                  <h3 className="font-bold mt-3">{atividade.titulo}</h3>
+                  <p className="text-sm text-slate-500 mt-1">
+                    {atividade.disciplina}
+                  </p>
+                  <p className="text-xs text-slate-400 mt-3">
+                    Prazo: {atividade.prazo}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
         <aside className="space-y-6">
-          <div>
-            <div className="flex justify-between items-center mb-3">
-              <h2 className="text-xl font-bold">Avisos Recentes</h2>
-              <button className="text-blue-700 font-semibold text-sm">Ver todos</button>
+          <div className="bg-white rounded-3xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
+                <TrendingUp size={20} />
+              </div>
+
+              <div>
+                <h2 className="font-bold">Progresso do curso</h2>
+                <p className="text-sm text-slate-500">ADS</p>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Conclusão geral</span>
+                <span className="font-semibold">72%</span>
+              </div>
+
+              <div className="h-3 bg-slate-200 rounded-full overflow-hidden">
+                <div className="h-full bg-blue-700 rounded-full w-[72%]" />
+              </div>
+            </div>
+
+            <button
+              onClick={() => navigate("/cursos/ads")}
+              className="mt-5 w-full bg-blue-700 text-white py-3 rounded-xl text-sm font-semibold hover:bg-blue-800 transition"
+            >
+              Continuar curso
+            </button>
+          </div>
+
+          <div className="bg-white rounded-3xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="font-bold">Mensagens recentes</h2>
+
+              <button
+                onClick={() => navigate("/mensagens")}
+                className="text-blue-700 text-sm font-semibold"
+              >
+                Ver
+              </button>
             </div>
 
             <div className="space-y-3">
-              <NoticeCard initials="AL" name="Ana Lima" text="Olá turma! Informo que a prova 2 foi reagendada para..." />
-              <NoticeCard initials="RD" name="Roberto Dias" text="A entrega do trabalho de Metodologias Ágeis foi prorrogada..." />
-            </div>
-          </div>
-
-          <div>
-            <div className="flex justify-between items-center mb-3">
-              <h2 className="text-xl font-bold">Calendário</h2>
-              <button className="text-blue-700 font-semibold text-sm">Ver completo</button>
-            </div>
-
-            <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
-              <p className="font-semibold">Próximos eventos</p>
-
-              <div className="mt-4 space-y-3 text-sm">
-                <div className="border-l-4 border-red-400 pl-3">
-                  <p className="font-semibold">Prova 2 – Banco de Dados</p>
-                  <p className="text-slate-500">28/03 · 10:00</p>
+              {mensagensRecentes.map((mensagem) => (
+                <div
+                  key={mensagem.nome}
+                  className="rounded-2xl bg-slate-50 p-4"
+                >
+                  <p className="font-semibold">{mensagem.nome}</p>
+                  <p className="text-sm text-slate-500 mt-1">
+                    {mensagem.texto}
+                  </p>
                 </div>
-
-                <div className="border-l-4 border-yellow-400 pl-3">
-                  <p className="font-semibold">Entrega Eng. Software</p>
-                  <p className="text-slate-500">29/03 · 23:59</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </aside>
@@ -108,72 +277,40 @@ export default function Home() {
   );
 }
 
-function InfoCard({
+function DashboardCard({
   icon,
+  title,
   value,
-  label,
+  description,
+  color,
+  onClick,
 }: {
   icon: React.ReactNode;
-  value: string;
-  label: string;
-}) {
-  return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm flex flex-col items-center justify-center text-center">
-      <div className="text-blue-700 mb-2">{icon}</div>
-      <p className="text-2xl font-bold">{value}</p>
-      <p className="text-sm text-slate-500">{label}</p>
-    </div>
-  );
-}
-
-function ClassCard({
-  title,
-  time,
-  type,
-}: {
   title: string;
-  time: string;
-  type: string;
+  value: string;
+  description: string;
+  color: "blue" | "green" | "yellow" | "purple";
+  onClick: () => void;
 }) {
-  const isOnline = type === "Online";
+  const colors = {
+    blue: "bg-blue-100 text-blue-700",
+    green: "bg-green-100 text-green-700",
+    yellow: "bg-yellow-100 text-yellow-700",
+    purple: "bg-purple-100 text-purple-700",
+  };
 
   return (
-    <div className="bg-white rounded-2xl p-5 shadow-sm">
-      <h3 className="font-bold">{title}</h3>
-      <p className="text-sm text-slate-500 mt-1">{time}</p>
-
-      <span
-        className={`inline-block mt-3 text-xs px-3 py-1 rounded-full font-semibold ${
-          isOnline ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700"
-        }`}
-      >
-        {type}
-      </span>
-    </div>
-  );
-}
-
-function NoticeCard({
-  initials,
-  name,
-  text,
-}: {
-  initials: string;
-  name: string;
-  text: string;
-}) {
-  return (
-    <div className="bg-white rounded-2xl p-4 shadow-sm flex gap-3 items-center">
-      <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
-        {initials}
+    <button
+      onClick={onClick}
+      className="bg-white rounded-3xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.05)] text-left hover:scale-[1.02] transition"
+    >
+      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${colors[color]}`}>
+        {icon}
       </div>
 
-      <div className="flex-1">
-        <p className="font-bold">{name}</p>
-        <p className="text-sm text-slate-500 truncate">{text}</p>
-      </div>
-
-      <span className="w-2 h-2 rounded-full bg-blue-700" />
-    </div>
+      <p className="text-sm text-slate-500 mt-4">{title}</p>
+      <p className="text-2xl font-bold mt-1">{value}</p>
+      <p className="text-sm text-slate-400 mt-1">{description}</p>
+    </button>
   );
 }
