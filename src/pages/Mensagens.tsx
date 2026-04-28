@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Bell,
   MessageCirclePlus,
@@ -57,26 +57,10 @@ const conversasIniciais: Conversa[] = [
 ];
 
 const professoresDisponiveis = [
-  {
-    id: 10,
-    nome: "Prof. Ana Lima",
-    cargo: "Banco de Dados",
-  },
-  {
-    id: 11,
-    nome: "Prof. Roberto Dias",
-    cargo: "Engenharia de Software",
-  },
-  {
-    id: 12,
-    nome: "Prof. Fernanda Costa",
-    cargo: "Redes de Computadores",
-  },
-  {
-    id: 13,
-    nome: "Prof. Mariana Lopes",
-    cargo: "Interface e UX",
-  },
+  { id: 10, nome: "Prof. Ana Lima", cargo: "Banco de Dados" },
+  { id: 11, nome: "Prof. Roberto Dias", cargo: "Engenharia de Software" },
+  { id: 12, nome: "Prof. Fernanda Costa", cargo: "Redes de Computadores" },
+  { id: 13, nome: "Prof. Mariana Lopes", cargo: "Interface e UX" },
 ];
 
 const mensagensIniciais: Record<number, Mensagem[]> = {
@@ -144,6 +128,8 @@ export default function Mensagens() {
   const [busca, setBusca] = useState("");
   const [mostrandoNovoChat, setMostrandoNovoChat] = useState(false);
 
+  const chatEndRef = useRef<HTMLDivElement | null>(null);
+
   const conversaAtiva = conversas.find((c) => c.id === chatAtivo);
 
   useEffect(() => {
@@ -153,6 +139,10 @@ export default function Mensagens() {
   useEffect(() => {
     localStorage.setItem(STORAGE_MENSAGENS, JSON.stringify(mensagens));
   }, [mensagens]);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chatAtivo, mensagens]);
 
   const conversasFiltradas = useMemo(() => {
     const termo = busca.toLowerCase();
@@ -165,12 +155,18 @@ export default function Mensagens() {
   }, [busca, conversas]);
 
   function enviarMensagem() {
-    if (!novaMensagem.trim() || !chatAtivo || conversaAtiva?.tipo === "automatico") {
+    if (
+      !novaMensagem.trim() ||
+      !chatAtivo ||
+      conversaAtiva?.tipo === "automatico"
+    ) {
       return;
     }
 
+    const textoMensagem = novaMensagem;
+
     const nova: Mensagem = {
-      texto: novaMensagem,
+      texto: textoMensagem,
       enviada: true,
       hora: new Date().toLocaleTimeString("pt-BR", {
         hour: "2-digit",
@@ -183,13 +179,20 @@ export default function Mensagens() {
       [chatAtivo]: [...(prev[chatAtivo] || []), nova],
     }));
 
-    setConversas((prev) =>
-      prev.map((conversa) =>
-        conversa.id === chatAtivo
-          ? { ...conversa, ultimaMensagem: novaMensagem }
-          : conversa
-      )
-    );
+    setConversas((prev) => {
+      const conversaAtualizada = prev.find((c) => c.id === chatAtivo);
+      const outrasConversas = prev.filter((c) => c.id !== chatAtivo);
+
+      if (!conversaAtualizada) return prev;
+
+      return [
+        {
+          ...conversaAtualizada,
+          ultimaMensagem: textoMensagem,
+        },
+        ...outrasConversas,
+      ];
+    });
 
     setNovaMensagem("");
   }
@@ -226,6 +229,11 @@ export default function Mensagens() {
     const conversaExistente = conversas.find((c) => c.nome === professor.nome);
 
     if (conversaExistente) {
+      setConversas((prev) => [
+        conversaExistente,
+        ...prev.filter((c) => c.id !== conversaExistente.id),
+      ]);
+
       setChatAtivo(conversaExistente.id);
       setMostrandoNovoChat(false);
       return;
@@ -239,7 +247,7 @@ export default function Mensagens() {
       ultimaMensagem: "Conversa iniciada. Envie sua primeira mensagem.",
     };
 
-    setConversas((prev) => [...prev, novaConversa]);
+    setConversas((prev) => [novaConversa, ...prev]);
 
     setMensagens((prev) => ({
       ...prev,
@@ -255,6 +263,7 @@ export default function Mensagens() {
       <aside className="w-[340px] border-r border-slate-100 flex flex-col">
         <div className="p-5 border-b border-slate-100">
           <h1 className="text-xl font-bold">Mensagens</h1>
+
           <p className="text-sm text-slate-500">
             Converse com professores e acompanhe lembretes
           </p>
@@ -321,12 +330,18 @@ export default function Mensagens() {
                           : "bg-blue-100 text-blue-700"
                       }`}
                     >
-                      {isAutomatic ? <Bell size={19} /> : <UserRound size={19} />}
+                      {isAutomatic ? (
+                        <Bell size={19} />
+                      ) : (
+                        <UserRound size={19} />
+                      )}
                     </div>
 
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <p className="font-semibold truncate">{conversa.nome}</p>
+                        <p className="font-semibold truncate">
+                          {conversa.nome}
+                        </p>
 
                         {isAutomatic && (
                           <span className="text-[10px] bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full font-semibold">
@@ -336,6 +351,7 @@ export default function Mensagens() {
                       </div>
 
                       <p className="text-xs text-slate-500">{conversa.cargo}</p>
+
                       <p className="text-sm text-slate-500 truncate mt-1">
                         {conversa.ultimaMensagem}
                       </p>
@@ -403,6 +419,7 @@ export default function Mensagens() {
                   }`}
                 >
                   <p className="text-sm">{msg.texto}</p>
+
                   <p
                     className={`text-[10px] mt-1 ${
                       msg.enviada ? "text-blue-100" : "text-slate-400"
@@ -412,6 +429,8 @@ export default function Mensagens() {
                   </p>
                 </div>
               ))}
+
+              <div ref={chatEndRef} />
             </section>
 
             {conversaAtiva.tipo === "automatico" ? (
