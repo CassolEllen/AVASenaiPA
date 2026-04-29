@@ -1,11 +1,9 @@
 @import "tailwindcss";
 
-/* RESET BÁSICO */
 * {
   box-sizing: border-box;
 }
 
-/* BODY PADRÃO */
 body {
   margin: 0;
   background-color: #f5f7fb;
@@ -13,13 +11,11 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* DARK MODE GLOBAL */
 html.dark body {
   background-color: #020617;
   color: #f8fafc;
 }
 
-/* SCROLL BONITO (opcional, mas melhora UX) */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -35,4 +31,20 @@ html.dark body {
 
 html.dark ::-webkit-scrollbar-thumb {
   background-color: #334155;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease;
 }
