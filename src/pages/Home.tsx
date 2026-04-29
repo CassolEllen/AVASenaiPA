@@ -40,10 +40,20 @@ const atividadesPendentes = [
     prazo: "01/06/2026",
   },
   {
+    titulo: "Projeto de Desenvolvimento Web Frontend",
+    disciplina: "Desenvolvimento Web",
+    prazo: "08/06/2026",
+  },
+  {
     titulo: "Atividade Prática - Falhas de Implantação",
     disciplina: "Implantação de Sistemas",
     prazo: "05/06/2026",
   },
+  {
+    titulo: "Exercícios de Banco de Dados SQL",
+    disciplina: "Banco de Dados",
+    prazo: "18/06/2026",
+  }
 ];
 
 const mensagensRecentes = [
