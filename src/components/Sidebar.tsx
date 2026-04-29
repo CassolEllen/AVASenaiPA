@@ -8,7 +8,7 @@ import {
   Calendar,
   Bell,
   User,
-  Settings
+  Settings,
 } from "lucide-react";
 
 export default function Sidebar() {
@@ -16,18 +16,19 @@ export default function Sidebar() {
 
   const isActive = (path: string) => location.pathname === path;
 
-  const itemClass = (path: string) => 
+  const itemClass = (path: string) =>
     `flex items-center gap-3 p-3 rounded-lg transition ${
       isActive(path)
-      ? "bg-blue-600 text-white"
-      : "text-gray-600 hover:bg-gray-100"
+        ? "bg-blue-600 text-white"
+        : "text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800"
     }`;
 
   return (
-    <div className="w-64 bg-white border-r flex flex-col justify-between">
-      {/* topo */}
+    <div className="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col justify-between transition-colors">
       <div>
-        <div className="p-4 font-bold text-lg">SENAI AVA</div>
+        <div className="p-4 font-bold text-lg text-slate-900 dark:text-white">
+          SENAI AVA
+        </div>
 
         <nav className="flex flex-col gap-1 px-2">
           <Link to="/" className={itemClass("/")}>
@@ -68,15 +69,17 @@ export default function Sidebar() {
         </nav>
       </div>
 
-      {/* footer */}
-      <div className="p-4 border-t">
+      <div className="p-4 border-t border-slate-200 dark:border-slate-800">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center">
             EC
           </div>
+
           <div>
-            <div className="text-sm font-semibold">Ellen Cristina</div>
-            <div className="text-xs text-gray-500">ADS</div>
+            <div className="text-sm font-semibold text-slate-900 dark:text-white">
+              Ellen Cristina
+            </div>
+            <div className="text-xs text-gray-500 dark:text-slate-400">ADS</div>
           </div>
         </div>
       </div>

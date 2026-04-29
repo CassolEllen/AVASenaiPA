@@ -1,12 +1,58 @@
 @import "tailwindcss";
 
+body {
+  margin: 0;
+  background-color: #f5f7fb;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark body {
+  background-color: #020617;
+  color: #f8fafc;
+}
+
 * {
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #f5f7fb;
-  color: #0f172a;
+/* Ajustes globais para dark mode */
+html.dark .bg-white {
+  background-color: #0f172a !important;
+}
+
+html.dark .bg-slate-50,
+html.dark .bg-gray-50,
+html.dark .bg-gray-100,
+html.dark .bg-slate-100 {
+  background-color: #1e293b !important;
+}
+
+html.dark [class*="bg-[#f5f7fb]"] {
+  background-color: #020617 !important;
+}
+
+html.dark .text-slate-900,
+html.dark .text-gray-900,
+html.dark .text-black {
+  color: #f8fafc !important;
+}
+
+html.dark .text-slate-700,
+html.dark .text-gray-700,
+html.dark .text-gray-600 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-slate-500,
+html.dark .text-gray-500 {
+  color: #94a3b8 !important;
+}
+
+html.dark .border,
+html.dark .border-r,
+html.dark .border-b,
+html.dark .border-slate-100,
+html.dark .border-slate-200,
+html.dark .border-gray-100 {
+  border-color: #1e293b !important;
 }
