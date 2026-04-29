@@ -92,20 +92,22 @@ export default function Aulas() {
   return (
     <div className="max-w-[1400px] mx-auto space-y-6">
       <header className="flex items-center gap-3">
-        <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
+        <div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center">
           <CalendarDays size={22} />
         </div>
 
         <div>
-          <h1 className="text-2xl font-bold">Aulas</h1>
-          <p className="text-sm text-slate-500">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+            Aulas
+          </h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             Acompanhe suas aulas presenciais e online
           </p>
         </div>
       </header>
 
       {proximaAula && (
-        <section className="bg-gradient-to-r from-blue-700 to-cyan-500 text-white rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)] flex items-center justify-between gap-6">
+        <section className="bg-gradient-to-r from-blue-700 to-cyan-500 text-white rounded-3xl p-6 shadow-[0_8px_30px_rgba(15,23,42,0.12)] flex items-center justify-between gap-6">
           <div>
             <div className="flex items-center gap-2 text-sm opacity-90">
               <Star size={16} />
@@ -186,7 +188,7 @@ function Filter({
       className={`px-5 py-2 rounded-xl text-sm font-semibold transition ${
         active
           ? "bg-blue-700 text-white shadow-sm"
-          : "bg-white text-slate-600 hover:bg-slate-100"
+          : "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-100 dark:border-slate-700"
       }`}
     >
       {label}
@@ -221,29 +223,31 @@ function AulaCard({
 
   const statusColor =
     status === "Em andamento"
-      ? "bg-green-100 text-green-700"
+      ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300"
       : status === "Concluída"
-      ? "bg-slate-200 text-slate-600"
-      : "bg-blue-100 text-blue-700";
+      ? "bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300"
+      : "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300";
 
   const tipoColor = isOnline
-    ? "bg-blue-100 text-blue-700"
-    : "bg-green-100 text-green-700";
+    ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
+    : "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300";
 
   return (
     <article
-      className={`bg-white rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:scale-[1.01] transition space-y-4 border ${
+      className={`bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-[0_8px_30px_rgba(15,23,42,0.08)] border transition hover:scale-[1.01] space-y-4 ${
         isToday
-          ? "border-blue-300 ring-2 ring-blue-100"
+          ? "border-blue-300 dark:border-blue-500 ring-2 ring-blue-100 dark:ring-blue-900/40"
           : isNext
-          ? "border-cyan-200"
-          : "border-transparent"
+          ? "border-cyan-200 dark:border-cyan-700"
+          : "border-slate-100 dark:border-slate-700"
       }`}
     >
       <div className="flex justify-between items-start gap-4">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <h2 className="font-bold text-lg">{materia}</h2>
+            <h2 className="font-bold text-lg text-slate-900 dark:text-white">
+              {materia}
+            </h2>
 
             {isToday && (
               <span className="text-xs px-2 py-1 rounded-full bg-blue-700 text-white font-semibold">
@@ -252,13 +256,15 @@ function AulaCard({
             )}
 
             {isNext && !isToday && (
-              <span className="text-xs px-2 py-1 rounded-full bg-cyan-100 text-cyan-700 font-semibold">
+              <span className="text-xs px-2 py-1 rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300 font-semibold">
                 Próxima
               </span>
             )}
           </div>
 
-          <p className="text-sm text-blue-700 font-medium mt-1">{professor}</p>
+          <p className="text-sm text-blue-700 dark:text-blue-300 font-medium mt-1">
+            {professor}
+          </p>
         </div>
 
         <span className={`text-xs px-3 py-1 rounded-full font-semibold ${statusColor}`}>
@@ -271,11 +277,11 @@ function AulaCard({
           {tipo}
         </span>
 
-        <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600 font-semibold">
+        <span className="text-xs px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-semibold">
           {formatarData(data)}
         </span>
 
-        <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600 font-semibold">
+        <span className="text-xs px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-semibold">
           {hora}
         </span>
       </div>
@@ -292,7 +298,7 @@ function AulaCard({
             Acessar Meet
           </a>
         ) : (
-          <div className="flex items-center gap-2 text-slate-600 text-sm bg-slate-100 px-4 py-2 rounded-xl">
+          <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm bg-slate-100 dark:bg-slate-700 px-4 py-2 rounded-xl">
             <MapPin size={16} />
             {local}
           </div>

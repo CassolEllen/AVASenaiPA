@@ -81,11 +81,15 @@ export default function Calendario() {
   }, [currentDate]);
 
   function nextMonth() {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
+    );
   }
 
   function prevMonth() {
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
+    );
   }
 
   function goToday() {
@@ -97,30 +101,39 @@ export default function Calendario() {
     <div className="max-w-[1400px] mx-auto space-y-6">
       <header className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold capitalize">
+          <h1 className="text-2xl font-bold capitalize text-slate-900 dark:text-white">
             {monthLabel(currentDate)}
           </h1>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             Visualize suas aulas em formato de agenda
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <button onClick={goToday} className="px-4 py-2 rounded-xl bg-white text-slate-700 text-sm font-semibold shadow-sm hover:bg-slate-100 transition">
+          <button
+            onClick={goToday}
+            className="px-4 py-2 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-semibold shadow-sm hover:bg-slate-100 dark:hover:bg-slate-700 transition border border-slate-100 dark:border-slate-700"
+          >
             Hoje
           </button>
 
-          <button onClick={prevMonth} className="p-2 rounded-xl bg-white shadow-sm hover:bg-slate-100 transition">
+          <button
+            onClick={prevMonth}
+            className="p-2 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-sm hover:bg-slate-100 dark:hover:bg-slate-700 transition border border-slate-100 dark:border-slate-700"
+          >
             <ChevronLeft size={20} />
           </button>
 
-          <button onClick={nextMonth} className="p-2 rounded-xl bg-white shadow-sm hover:bg-slate-100 transition">
+          <button
+            onClick={nextMonth}
+            className="p-2 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-sm hover:bg-slate-100 dark:hover:bg-slate-700 transition border border-slate-100 dark:border-slate-700"
+          >
             <ChevronRight size={20} />
           </button>
         </div>
       </header>
 
-      <div className="flex items-center gap-4 text-xs text-slate-500">
+      <div className="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
         <span className="flex items-center gap-2">
           <span className="w-3 h-3 rounded-full bg-green-400" />
           Presencial
@@ -137,10 +150,13 @@ export default function Calendario() {
         </span>
       </div>
 
-      <section className="bg-white rounded-3xl shadow-[0_8px_30px_rgba(15,23,42,0.08)] overflow-hidden border border-slate-100">
-        <div className="grid grid-cols-7 bg-slate-50 border-b border-slate-100">
+      <section className="bg-white dark:bg-slate-800 rounded-3xl shadow-[0_8px_30px_rgba(15,23,42,0.08)] overflow-hidden border border-slate-100 dark:border-slate-700">
+        <div className="grid grid-cols-7 bg-slate-50 dark:bg-slate-900 border-b border-slate-100 dark:border-slate-700">
           {diasSemana.map((dia) => (
-            <div key={dia} className="p-4 text-center text-sm font-bold text-slate-500">
+            <div
+              key={dia}
+              className="p-4 text-center text-sm font-bold text-slate-500 dark:text-slate-400"
+            >
               {dia}
             </div>
           ))}
@@ -156,9 +172,11 @@ export default function Calendario() {
             return (
               <div
                 key={iso}
-                className={`min-h-[140px] p-3 border-r border-b border-slate-100 transition ${
-                  isCurrentMonth ? "bg-white" : "bg-slate-50/70"
-                } ${isToday ? "bg-blue-50/40" : ""}`}
+                className={`min-h-[140px] p-3 border-r border-b border-slate-100 dark:border-slate-700 transition ${
+                  isCurrentMonth
+                    ? "bg-white dark:bg-slate-800"
+                    : "bg-slate-50/70 dark:bg-slate-900/80"
+                } ${isToday ? "bg-blue-50/40 dark:bg-blue-900/20" : ""}`}
               >
                 <div className="flex justify-between items-center mb-2">
                   <span
@@ -166,16 +184,17 @@ export default function Calendario() {
                       isToday
                         ? "bg-blue-700 text-white shadow-md"
                         : isCurrentMonth
-                        ? "text-slate-700"
-                        : "text-slate-300"
+                        ? "text-slate-700 dark:text-slate-200"
+                        : "text-slate-300 dark:text-slate-600"
                     }`}
                   >
                     {date.getDate()}
                   </span>
 
                   {aulasDoDia.length > 0 && (
-                    <span className="text-[10px] text-slate-400">
-                      {aulasDoDia.length} aula{aulasDoDia.length > 1 ? "s" : ""}
+                    <span className="text-[10px] text-slate-400 dark:text-slate-500">
+                      {aulasDoDia.length} aula
+                      {aulasDoDia.length > 1 ? "s" : ""}
                     </span>
                   )}
                 </div>
@@ -191,8 +210,8 @@ export default function Calendario() {
                         onClick={() => setSelectedAula(aula)}
                         className={`w-full text-left group rounded-xl p-2 text-xs border transition hover:scale-[1.02] hover:shadow-sm ${
                           isOnline
-                            ? "bg-blue-50 text-blue-700 border-blue-100"
-                            : "bg-green-50 text-green-700 border-green-100"
+                            ? "bg-blue-50 text-blue-700 border-blue-100 dark:bg-blue-900/40 dark:text-blue-300 dark:border-blue-800"
+                            : "bg-green-50 text-green-700 border-green-100 dark:bg-green-900/40 dark:text-green-300 dark:border-green-800"
                         }`}
                       >
                         <p className="font-bold truncate">
@@ -223,23 +242,25 @@ export default function Calendario() {
       </section>
 
       {selectedAula && (
-        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl p-6 w-full max-w-[420px] shadow-[0_20px_60px_rgba(15,23,42,0.25)] space-y-5">
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 w-full max-w-[420px] shadow-[0_20px_60px_rgba(15,23,42,0.25)] border border-slate-100 dark:border-slate-700 space-y-5">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <span
                   className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold ${
                     selectedAula.tipo === "Online"
-                      ? "bg-blue-100 text-blue-700"
-                      : "bg-green-100 text-green-700"
+                      ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
+                      : "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300"
                   }`}
                 >
                   {selectedAula.tipo}
                 </span>
 
-                <h2 className="text-xl font-bold mt-3">{selectedAula.materia}</h2>
+                <h2 className="text-xl font-bold mt-3 text-slate-900 dark:text-white">
+                  {selectedAula.materia}
+                </h2>
 
-                <p className="text-sm text-slate-500 mt-1">
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
                   {formatarData(selectedAula.data)} · {selectedAula.hora}
                 </p>
               </div>
@@ -247,7 +268,7 @@ export default function Calendario() {
               <button
                 type="button"
                 onClick={() => setSelectedAula(null)}
-                className="p-2 rounded-xl hover:bg-slate-100 text-slate-500"
+                className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400"
               >
                 <X size={20} />
               </button>
@@ -264,7 +285,7 @@ export default function Calendario() {
                 Entrar na aula
               </a>
             ) : (
-              <div className="flex items-center gap-2 bg-slate-100 text-slate-700 py-3 px-4 rounded-xl font-semibold">
+              <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 py-3 px-4 rounded-xl font-semibold">
                 <MapPin size={18} />
                 {selectedAula.local}
               </div>
@@ -273,7 +294,7 @@ export default function Calendario() {
             <button
               type="button"
               onClick={() => setSelectedAula(null)}
-              className="w-full text-sm text-slate-500 hover:text-slate-800 transition"
+              className="w-full text-sm text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition"
             >
               Fechar
             </button>

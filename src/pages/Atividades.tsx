@@ -87,15 +87,18 @@ export default function Atividades() {
   });
 
   return (
-    <div className="max-w-[900px] mx-auto space-y-6">
+    <div className="max-w-[1000px] mx-auto space-y-6">
       <header className="flex items-center gap-3">
-        <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
+        <div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 flex items-center justify-center">
           <ClipboardList size={20} />
         </div>
 
         <div>
-          <h1 className="text-2xl font-bold">Atividades</h1>
-          <p className="text-sm text-gray-500">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+            Atividades
+          </h1>
+
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             {pendentes} {pendentes === 1 ? "pendente" : "pendentes"}
           </p>
         </div>
@@ -148,7 +151,7 @@ function Filter({
       className={`px-5 py-2 rounded-xl text-sm font-semibold transition ${
         active
           ? "bg-blue-700 text-white shadow-sm"
-          : "bg-white text-slate-600 hover:bg-slate-100"
+          : "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-100 dark:border-slate-700"
       }`}
     >
       {label}
@@ -175,15 +178,15 @@ function AtividadeCard({
 
   const statusStyle =
     status === "Enviado"
-      ? "bg-green-100 text-green-700"
+      ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300"
       : status === "Atrasado"
-      ? "bg-red-100 text-red-700"
-      : "bg-yellow-100 text-yellow-700";
+      ? "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300"
+      : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300";
 
   return (
     <article
       onClick={() => navigate(`/atividades/${id}`)}
-      className="bg-white rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)] flex justify-between gap-4 hover:scale-[1.01] transition cursor-pointer"
+      className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-[0_8px_30px_rgba(15,23,42,0.08)] border border-slate-100 dark:border-slate-700 flex justify-between gap-4 hover:scale-[1.01] transition cursor-pointer"
     >
       <div className="space-y-3">
         <span
@@ -193,19 +196,25 @@ function AtividadeCard({
         </span>
 
         <div>
-          <h2 className="font-bold text-lg">{titulo}</h2>
-          <p className="text-sm text-slate-500">
+          <h2 className="font-bold text-lg text-slate-900 dark:text-white">
+            {titulo}
+          </h2>
+
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             {disciplina} · {professor}
           </p>
         </div>
 
-        <p className="text-sm text-slate-500 flex items-center gap-2">
+        <p className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-2">
           <Clock size={15} />
           Prazo: {prazo}
         </p>
       </div>
 
-      <ChevronRight className="text-slate-400 shrink-0" size={22} />
+      <ChevronRight
+        className="text-slate-400 dark:text-slate-500 shrink-0"
+        size={22}
+      />
     </article>
   );
 }

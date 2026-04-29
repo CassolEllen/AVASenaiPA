@@ -129,7 +129,6 @@ export default function Mensagens() {
   const [mostrandoNovoChat, setMostrandoNovoChat] = useState(false);
 
   const chatEndRef = useRef<HTMLDivElement | null>(null);
-
   const conversaAtiva = conversas.find((c) => c.id === chatAtivo);
 
   useEffect(() => {
@@ -259,12 +258,14 @@ export default function Mensagens() {
   }
 
   return (
-    <div className="max-w-[1200px] mx-auto h-[80vh] bg-white rounded-3xl shadow-[0_8px_30px_rgba(15,23,42,0.08)] overflow-hidden flex border border-slate-100">
-      <aside className="w-[340px] border-r border-slate-100 flex flex-col">
-        <div className="p-5 border-b border-slate-100">
-          <h1 className="text-xl font-bold">Mensagens</h1>
+    <div className="max-w-[1200px] mx-auto h-[80vh] bg-white dark:bg-slate-800 rounded-3xl shadow-[0_8px_30px_rgba(15,23,42,0.08)] overflow-hidden flex border border-slate-100 dark:border-slate-700">
+      <aside className="w-[340px] border-r border-slate-100 dark:border-slate-700 flex flex-col">
+        <div className="p-5 border-b border-slate-100 dark:border-slate-700">
+          <h1 className="text-xl font-bold text-slate-900 dark:text-white">
+            Mensagens
+          </h1>
 
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             Converse com professores e acompanhe lembretes
           </p>
 
@@ -278,7 +279,7 @@ export default function Mensagens() {
               value={busca}
               onChange={(e) => setBusca(e.target.value)}
               placeholder="Buscar professor ou disciplina..."
-              className="w-full bg-slate-100 rounded-xl pl-10 pr-4 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-100"
+              className="w-full bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 rounded-xl pl-10 pr-4 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/40"
             />
           </div>
 
@@ -291,15 +292,19 @@ export default function Mensagens() {
           </button>
 
           {mostrandoNovoChat && (
-            <div className="mt-3 bg-slate-50 rounded-xl p-2 space-y-1">
+            <div className="mt-3 bg-slate-50 dark:bg-slate-900 rounded-xl p-2 space-y-1 border border-slate-100 dark:border-slate-700">
               {professoresDisponiveis.map((professor) => (
                 <button
                   key={professor.id}
                   onClick={() => iniciarNovoChat(professor)}
-                  className="w-full text-left p-3 rounded-lg hover:bg-white transition"
+                  className="w-full text-left p-3 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition"
                 >
-                  <p className="text-sm font-semibold">{professor.nome}</p>
-                  <p className="text-xs text-slate-500">{professor.cargo}</p>
+                  <p className="text-sm font-semibold text-slate-900 dark:text-white">
+                    {professor.nome}
+                  </p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    {professor.cargo}
+                  </p>
                 </button>
               ))}
             </div>
@@ -314,8 +319,8 @@ export default function Mensagens() {
             return (
               <div
                 key={conversa.id}
-                className={`group w-full border-b border-slate-100 hover:bg-slate-50 transition ${
-                  active ? "bg-blue-50" : ""
+                className={`group w-full border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/60 transition ${
+                  active ? "bg-blue-50 dark:bg-blue-900/30" : ""
                 }`}
               >
                 <button
@@ -326,8 +331,8 @@ export default function Mensagens() {
                     <div
                       className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
                         isAutomatic
-                          ? "bg-yellow-100 text-yellow-700"
-                          : "bg-blue-100 text-blue-700"
+                          ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300"
+                          : "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
                       }`}
                     >
                       {isAutomatic ? (
@@ -339,20 +344,22 @@ export default function Mensagens() {
 
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <p className="font-semibold truncate">
+                        <p className="font-semibold truncate text-slate-900 dark:text-white">
                           {conversa.nome}
                         </p>
 
                         {isAutomatic && (
-                          <span className="text-[10px] bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full font-semibold">
+                          <span className="text-[10px] bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300 px-2 py-0.5 rounded-full font-semibold">
                             Sistema
                           </span>
                         )}
                       </div>
 
-                      <p className="text-xs text-slate-500">{conversa.cargo}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">
+                        {conversa.cargo}
+                      </p>
 
-                      <p className="text-sm text-slate-500 truncate mt-1">
+                      <p className="text-sm text-slate-500 dark:text-slate-400 truncate mt-1">
                         {conversa.ultimaMensagem}
                       </p>
                     </div>
@@ -377,7 +384,7 @@ export default function Mensagens() {
           })}
 
           {conversasFiltradas.length === 0 && (
-            <p className="text-sm text-slate-500 p-5">
+            <p className="text-sm text-slate-500 dark:text-slate-400 p-5">
               Nenhuma conversa encontrada.
             </p>
           )}
@@ -387,12 +394,12 @@ export default function Mensagens() {
       <main className="flex-1 flex flex-col">
         {conversaAtiva ? (
           <>
-            <header className="p-5 border-b border-slate-100 flex items-center gap-3">
+            <header className="p-5 border-b border-slate-100 dark:border-slate-700 flex items-center gap-3">
               <div
                 className={`w-11 h-11 rounded-full flex items-center justify-center ${
                   conversaAtiva.tipo === "automatico"
-                    ? "bg-yellow-100 text-yellow-700"
-                    : "bg-blue-100 text-blue-700"
+                    ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300"
+                    : "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
                 }`}
               >
                 {conversaAtiva.tipo === "automatico" ? (
@@ -403,19 +410,23 @@ export default function Mensagens() {
               </div>
 
               <div>
-                <h2 className="font-bold">{conversaAtiva.nome}</h2>
-                <p className="text-sm text-slate-500">{conversaAtiva.cargo}</p>
+                <h2 className="font-bold text-slate-900 dark:text-white">
+                  {conversaAtiva.nome}
+                </h2>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  {conversaAtiva.cargo}
+                </p>
               </div>
             </header>
 
-            <section className="flex-1 p-5 space-y-3 overflow-y-auto bg-slate-50">
+            <section className="flex-1 p-5 space-y-3 overflow-y-auto bg-slate-50 dark:bg-slate-900">
               {(mensagens[chatAtivo || 0] || []).map((msg, index) => (
                 <div
                   key={index}
                   className={`max-w-[70%] rounded-2xl px-4 py-3 shadow-sm ${
                     msg.enviada
                       ? "bg-blue-700 text-white ml-auto rounded-br-md"
-                      : "bg-white text-slate-700 rounded-bl-md"
+                      : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-bl-md border border-slate-100 dark:border-slate-700"
                   }`}
                 >
                   <p className="text-sm">{msg.texto}</p>
@@ -434,14 +445,14 @@ export default function Mensagens() {
             </section>
 
             {conversaAtiva.tipo === "automatico" ? (
-              <div className="p-4 border-t border-slate-100 bg-white">
-                <p className="text-sm text-slate-500 text-center">
+              <div className="p-4 border-t border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800">
+                <p className="text-sm text-slate-500 dark:text-slate-400 text-center">
                   Esta conversa é automática. Apenas lembretes do sistema são
                   exibidos aqui.
                 </p>
               </div>
             ) : (
-              <div className="p-4 border-t border-slate-100 bg-white flex gap-3">
+              <div className="p-4 border-t border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800 flex gap-3">
                 <input
                   value={novaMensagem}
                   onChange={(e) => setNovaMensagem(e.target.value)}
@@ -449,7 +460,7 @@ export default function Mensagens() {
                     if (e.key === "Enter") enviarMensagem();
                   }}
                   placeholder="Digite sua mensagem para o professor..."
-                  className="flex-1 bg-slate-100 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-100"
+                  className="flex-1 bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/40"
                 />
 
                 <button
@@ -463,7 +474,7 @@ export default function Mensagens() {
             )}
           </>
         ) : (
-          <div className="flex-1 flex items-center justify-center text-slate-500">
+          <div className="flex-1 flex items-center justify-center text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900">
             Selecione uma conversa para iniciar.
           </div>
         )}
