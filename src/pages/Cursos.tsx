@@ -1,18 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import { BookOpen, ChevronRight } from "lucide-react";
+import { useIdioma } from "../hooks/useIdioma";
+import { textos } from "../i18n";
 
 const cursos = [
   {
     id: "ads",
-    titulo: "Análise e Desenvolvimento de Sistemas",
-    descricao:
-      "Curso focado em desenvolvimento de software, banco de dados, sistemas web e qualidade.",
+    titulo: textos["pt"].cursos.items.ads.titulo,
+    descricao: textos["pt"].cursos.items.ads.descricao,
     progresso: 72,
     semestres: 5,
   },
 ];
 
 export default function Cursos() {
+  const { idioma } = useIdioma();
+  const t = textos[idioma].cursos;
+
   return (
     <div className="max-w-[1000px] mx-auto space-y-6">
       <header className="flex items-center gap-3">
@@ -22,10 +26,10 @@ export default function Cursos() {
 
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-            Cursos
+            {t.title}
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            Acompanhe seus cursos, matérias e aulas por semestre
+            {t.subtitle}
           </p>
         </div>
       </header>
@@ -53,6 +57,11 @@ function CursoCard({
   semestres: number;
 }) {
   const navigate = useNavigate();
+  const { idioma } = useIdioma();
+  const t = textos[idioma].cursos;
+
+  const translatedTitulo = t.items.ads.titulo;
+  const translatedDescricao = t.items.ads.descricao;
 
   return (
     <article
@@ -62,11 +71,11 @@ function CursoCard({
       <div className="flex justify-between items-start gap-4">
         <div>
           <h2 className="font-bold text-lg text-slate-900 dark:text-white">
-            {titulo}
+            {translatedTitulo}
           </h2>
 
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            {descricao}
+            {translatedDescricao}
           </p>
         </div>
 
@@ -77,8 +86,8 @@ function CursoCard({
       </div>
 
       <div className="flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
-        <span>{semestres} semestres</span>
-        <span>{progresso}% concluído</span>
+        <span>{semestres} {t.semesters}</span>
+        <span>{progresso}% {t.completed}</span>
       </div>
 
       <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">

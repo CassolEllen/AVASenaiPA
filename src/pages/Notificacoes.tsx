@@ -1,47 +1,17 @@
-import {
+﻿import {
   Bell,
   CalendarDays,
   CheckCircle2,
   ClipboardList,
   MessageCircle,
 } from "lucide-react";
-
-const notificacoes = [
-  {
-    id: 1,
-    tipo: "atividade",
-    titulo: "Atividade próxima do prazo",
-    descricao: "Trabalho Prático de Listas Encadeadas vence em breve.",
-    horario: "Hoje · 08:30",
-    lida: false,
-  },
-  {
-    id: 2,
-    tipo: "aula",
-    titulo: "Aula online hoje",
-    descricao: "Banco de Dados inicia às 10:00 pelo Google Meet.",
-    horario: "Hoje · 09:15",
-    lida: false,
-  },
-  {
-    id: 3,
-    tipo: "mensagem",
-    titulo: "Nova mensagem do professor",
-    descricao: "Prof. Doglas respondeu sua dúvida sobre listas encadeadas.",
-    horario: "Ontem · 14:25",
-    lida: true,
-  },
-  {
-    id: 4,
-    tipo: "sistema",
-    titulo: "Bem-vinda ao AVA",
-    descricao: "Seu ambiente acadêmico está pronto para uso.",
-    horario: "Segunda · 08:00",
-    lida: true,
-  },
-];
+import { useIdioma } from "../hooks/useIdioma";
+import { textos } from "../i18n";
 
 export default function Notificacoes() {
+  const { idioma } = useIdioma();
+  const t = textos[idioma].notificacoes;
+  const notificacoes = t.notifications;
   const naoLidas = notificacoes.filter((n) => !n.lida).length;
 
   return (
@@ -53,11 +23,10 @@ export default function Notificacoes() {
 
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-            Notificações
+            {t.title}
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            {naoLidas} {naoLidas === 1 ? "não lida" : "não lidas"} · acompanhe
-            lembretes, mensagens e avisos importantes
+            {naoLidas} {naoLidas === 1 ? t.unreadSingular : t.unreadPlural} · {t.summary}
           </p>
         </div>
       </header>
@@ -84,6 +53,9 @@ function NotificationItem({
   horario: string;
   lida: boolean;
 }) {
+  const { idioma } = useIdioma();
+  const types = textos[idioma].notificacoes.types;
+
   const iconConfig = {
     atividade: {
       icon: <ClipboardList size={20} />,
@@ -107,6 +79,7 @@ function NotificationItem({
   } as const;
 
   const config = iconConfig[tipo as keyof typeof iconConfig];
+  const typeLabel = types[tipo as keyof typeof types] || tipo;
 
   return (
     <div
@@ -125,7 +98,9 @@ function NotificationItem({
       <div className="flex-1">
         <div className="flex items-center gap-2">
           <h2 className="font-bold text-slate-900 dark:text-white">{titulo}</h2>
-
+          <span className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-[0.15em]">
+            {typeLabel}
+          </span>
           {!lida && <span className="w-2 h-2 rounded-full bg-blue-700" />}
         </div>
 

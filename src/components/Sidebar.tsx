@@ -10,9 +10,12 @@ import {
   User,
   Settings,
 } from "lucide-react";
+import { useIdioma } from "../hooks/useIdioma";
+import { textos } from "../i18n";
 
 export default function Sidebar() {
   const location = useLocation();
+  const { idioma } = useIdioma();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -32,39 +35,39 @@ export default function Sidebar() {
 
         <nav className="flex flex-col gap-1 px-2">
           <Link to="/" className={itemClass("/")}>
-            <Home size={18} /> Início
+            <Home size={18} /> {textos[idioma].sidebar.inicio}
           </Link>
 
           <Link to="/aulas" className={itemClass("/aulas")}>
-            <BookOpen size={18} /> Aulas
+            <BookOpen size={18} /> {textos[idioma].sidebar.aulas}
           </Link>
 
           <Link to="/cursos" className={itemClass("/cursos")}>
-            <GraduationCap size={18} /> Cursos
+            <GraduationCap size={18} /> {textos[idioma].sidebar.cursos}
           </Link>
 
           <Link to="/atividades" className={itemClass("/atividades")}>
-            <ClipboardList size={18} /> Atividades
+            <ClipboardList size={18} /> {textos[idioma].sidebar.atividades}
           </Link>
 
           <Link to="/mensagens" className={itemClass("/mensagens")}>
-            <MessageSquare size={18} /> Mensagens
+            <MessageSquare size={18} /> {textos[idioma].sidebar.mensagens}
           </Link>
 
           <Link to="/calendario" className={itemClass("/calendario")}>
-            <Calendar size={18} /> Calendário
+            <Calendar size={18} /> {textos[idioma].sidebar.calendario}
           </Link>
 
           <Link to="/notificacoes" className={itemClass("/notificacoes")}>
-            <Bell size={18} /> Notificações
+            <Bell size={18} /> {textos[idioma].sidebar.notificacoes}
           </Link>
 
           <Link to="/perfil" className={itemClass("/perfil")}>
-            <User size={18} /> Perfil
+            <User size={18} /> {textos[idioma].sidebar.perfil}
           </Link>
 
           <Link to="/configuracoes" className={itemClass("/configuracoes")}>
-            <Settings size={18} /> Configurações
+            <Settings size={18} /> {textos[idioma].sidebar.configuracoes}
           </Link>
         </nav>
       </div>

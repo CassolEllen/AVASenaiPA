@@ -2,33 +2,93 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ClipboardList, ChevronRight, Clock } from "lucide-react";
 import { supabase } from "../lib/supabase";
+import { useIdioma } from "../hooks/useIdioma";
 
 const atividades = [
   {
     id: "atividade-1",
-    titulo: "Trabalho Prático de Listas Encadeadas",
-    disciplina: "Estrutura de Dados",
     professor: "Prof. Doglas André Finco",
     prazo: "01/06/2024 23:59",
     status: "Pendente",
   },
   {
     id: "atividade-2",
-    titulo: "Desafio 3 - Big Data, Analytics e Inteligência Artificial",
-    disciplina: "Big Data, Analytics e Inteligência Artificial",
     professor: "Prof. Victor Cézar Bonatti Carvalho",
     prazo: "05/06/2024 23:59",
     status: "Pendente",
   },
   {
     id: "atividade-3",
-    titulo: "Atividade Prática - Falhas de Implantação",
-    disciplina: "Implantação de Sistemas",
     professor: "Prof. Maximiano",
     prazo: "20/03/2024",
     status: "Atrasado",
   },
 ];
+
+const labels = {
+  pt: {
+    title: "Atividades",
+    pendingSingular: "pendente",
+    pendingPlural: "pendentes",
+    filters: {
+      all: "Todas",
+      pending: "Pendente",
+      sent: "Enviadas",
+      late: "Atrasadas",
+    },
+    status: {
+      Pendente: "Pendente",
+      Enviado: "Enviado",
+      Atrasado: "Atrasado",
+    },
+    deadline: "Prazo",
+    atividades: {
+      "atividade-1": {
+        titulo: "Trabalho Prático de Listas Encadeadas",
+        disciplina: "Estrutura de Dados",
+      },
+      "atividade-2": {
+        titulo: "Desafio 3 - Big Data, Analytics e Inteligência Artificial",
+        disciplina: "Big Data, Analytics e Inteligência Artificial",
+      },
+      "atividade-3": {
+        titulo: "Atividade Prática - Falhas de Implantação",
+        disciplina: "Implantação de Sistemas",
+      },
+    },
+  },
+  en: {
+    title: "Activities",
+    pendingSingular: "pending",
+    pendingPlural: "pending",
+    filters: {
+      all: "All",
+      pending: "Pending",
+      sent: "Sent",
+      late: "Late",
+    },
+    status: {
+      Pendente: "Pending",
+      Enviado: "Sent",
+      Atrasado: "Late",
+    },
+    deadline: "Deadline",
+    atividades: {
+      "atividade-1": {
+        titulo: "Practical Assignment - Linked Lists",
+        disciplina: "Data Structures",
+      },
+      "atividade-2": {
+        titulo: "Challenge 3 - Big Data, Analytics and Artificial Intelligence",
+        disciplina: "Big Data, Analytics and Artificial Intelligence",
+      },
+      "atividade-3": {
+        titulo: "Practical Activity - Deployment Failures",
+        disciplina: "Systems Deployment",
+      },
+    },
+  },
+};
 
 type Submission = {
   atividade_id: string;
@@ -37,6 +97,9 @@ type Submission = {
 type Filtro = "todas" | "pendente" | "enviado" | "atrasado";
 
 export default function Atividades() {
+  const { idioma } = useIdioma();
+  const t = labels[idioma];
+
   const [filtro, setFiltro] = useState<Filtro>("todas");
   const [submittedActivityIds, setSubmittedActivityIds] = useState<string[]>([]);
 
@@ -95,11 +158,11 @@ export default function Atividades() {
 
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-            Atividades
+            {t.title}
           </h1>
 
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            {pendentes} {pendentes === 1 ? "pendente" : "pendentes"}
+            {pendentes} {pendentes === 1 ? t.pendingSingular : t.pendingPlural}
           </p>
         </div>
       </header>
@@ -107,29 +170,44 @@ export default function Atividades() {
       <div className="flex gap-3 flex-wrap">
         <Filter
           active={filtro === "todas"}
-          label={`Todas (${total})`}
+          label={`${t.filters.all} (${total})`}
           onClick={() => setFiltro("todas")}
         />
+
         <Filter
           active={filtro === "pendente"}
-          label={`Pendente (${pendentes})`}
+          label={`${t.filters.pending} (${pendentes})`}
           onClick={() => setFiltro("pendente")}
         />
+
         <Filter
           active={filtro === "enviado"}
-          label={`Enviadas (${enviadas})`}
+          label={`${t.filters.sent} (${enviadas})`}
           onClick={() => setFiltro("enviado")}
         />
+
         <Filter
           active={filtro === "atrasado"}
-          label={`Atrasadas (${atrasadas})`}
+          label={`${t.filters.late} (${atrasadas})`}
           onClick={() => setFiltro("atrasado")}
         />
       </div>
 
       <section className="grid grid-cols-2 gap-5">
         {atividadesFiltradas.map((atividade) => (
-          <AtividadeCard key={atividade.id} {...atividade} />
+          <AtividadeCard
+            key={atividade.id}
+            id={atividade.id}
+            titulo={t.atividades[atividade.id as keyof typeof t.atividades].titulo}
+            disciplina={
+              t.atividades[atividade.id as keyof typeof t.atividades].disciplina
+            }
+            professor={atividade.professor}
+            prazo={atividade.prazo}
+            status={atividade.status}
+            statusLabel={t.status[atividade.status as keyof typeof t.status]}
+            deadlineLabel={t.deadline}
+          />
         ))}
       </section>
     </div>
@@ -166,6 +244,8 @@ function AtividadeCard({
   professor,
   prazo,
   status,
+  statusLabel,
+  deadlineLabel,
 }: {
   id: string;
   titulo: string;
@@ -173,6 +253,8 @@ function AtividadeCard({
   professor: string;
   prazo: string;
   status: string;
+  statusLabel: string;
+  deadlineLabel: string;
 }) {
   const navigate = useNavigate();
 
@@ -192,7 +274,7 @@ function AtividadeCard({
         <span
           className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full ${statusStyle}`}
         >
-          {status}
+          {statusLabel}
         </span>
 
         <div>
@@ -207,7 +289,7 @@ function AtividadeCard({
 
         <p className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-2">
           <Clock size={15} />
-          Prazo: {prazo}
+          {deadlineLabel}: {prazo}
         </p>
       </div>
 

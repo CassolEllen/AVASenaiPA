@@ -1,5 +1,7 @@
 import { ChevronLeft, ChevronRight, MapPin, Video, X } from "lucide-react";
 import { useMemo, useState } from "react";
+import { useIdioma } from "../hooks/useIdioma";
+import { textos } from "../i18n";
 
 type Aula = {
   materia: string;
@@ -37,8 +39,6 @@ const aulas: Aula[] = [
   { materia: "Desenvolvimento Web", data: "2026-04-30", hora: "08:00", tipo: "Presencial", local: "Laboratório 1" },
 ];
 
-const diasSemana = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-
 function formatDateISO(date: Date) {
   const ano = date.getFullYear();
   const mes = String(date.getMonth() + 1).padStart(2, "0");
@@ -46,25 +46,31 @@ function formatDateISO(date: Date) {
   return `${ano}-${mes}-${dia}`;
 }
 
-function formatarData(data: string) {
-  return new Date(`${data}T12:00:00`).toLocaleDateString("pt-BR");
+function formatarData(data: string, locale: string) {
+  return new Date(`${data}T12:00:00`).toLocaleDateString(locale, {
+    month: "2-digit",
+    day: "2-digit",
+  });
 }
 
 function hojeISO() {
   return formatDateISO(new Date());
 }
 
-function monthLabel(date: Date) {
-  return date.toLocaleDateString("pt-BR", {
+function monthLabel(date: Date, locale: string) {
+  return date.toLocaleDateString(locale, {
     month: "long",
     year: "numeric",
   });
 }
 
 export default function Calendario() {
+  const { idioma } = useIdioma();
+  const t = textos[idioma].calendario;
   const [currentDate, setCurrentDate] = useState(new Date(2026, 3, 1));
   const [selectedAula, setSelectedAula] = useState<Aula | null>(null);
   const hoje = hojeISO();
+  const diasSemana = t.days;
 
   const calendarDays = useMemo(() => {
     const year = currentDate.getFullYear();
@@ -102,10 +108,10 @@ export default function Calendario() {
       <header className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold capitalize text-slate-900 dark:text-white">
-            {monthLabel(currentDate)}
+            {monthLabel(currentDate, idioma === "pt" ? "pt-BR" : "en-US")}
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            Visualize suas aulas em formato de agenda
+            {t.subtitle}
           </p>
         </div>
 
@@ -114,7 +120,7 @@ export default function Calendario() {
             onClick={goToday}
             className="px-4 py-2 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-semibold shadow-sm hover:bg-slate-100 dark:hover:bg-slate-700 transition border border-slate-100 dark:border-slate-700"
           >
-            Hoje
+            {t.today}
           </button>
 
           <button
@@ -136,17 +142,17 @@ export default function Calendario() {
       <div className="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
         <span className="flex items-center gap-2">
           <span className="w-3 h-3 rounded-full bg-green-400" />
-          Presencial
+          {t.typeLabels.presencial}
         </span>
 
         <span className="flex items-center gap-2">
           <span className="w-3 h-3 rounded-full bg-blue-400" />
-          Online
+          {t.typeLabels.online}
         </span>
 
         <span className="flex items-center gap-2">
           <span className="w-3 h-3 rounded-full bg-blue-700" />
-          Hoje
+          {t.today}
         </span>
       </div>
 
@@ -193,8 +199,7 @@ export default function Calendario() {
 
                   {aulasDoDia.length > 0 && (
                     <span className="text-[10px] text-slate-400 dark:text-slate-500">
-                      {aulasDoDia.length} aula
-                      {aulasDoDia.length > 1 ? "s" : ""}
+                      {aulasDoDia.length} {aulasDoDia.length > 1 ? t.lessonsPlural : t.lessons}
                     </span>
                   )}
                 </div>
@@ -222,7 +227,7 @@ export default function Calendario() {
                           {isOnline ? (
                             <span className="inline-flex items-center gap-1 font-semibold">
                               <Video size={13} />
-                              Meet
+                              {t.meetLabel}
                             </span>
                           ) : (
                             <span className="inline-flex items-center gap-1 truncate">
@@ -253,15 +258,15 @@ export default function Calendario() {
                       : "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300"
                   }`}
                 >
-                  {selectedAula.tipo}
+                  {selectedAula.tipo === "Online"
+                    ? t.typeLabels.online
+                    : t.typeLabels.presencial}
                 </span>
-
                 <h2 className="text-xl font-bold mt-3 text-slate-900 dark:text-white">
                   {selectedAula.materia}
                 </h2>
-
-                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                  {formatarData(selectedAula.data)} · {selectedAula.hora}
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  {formatarData(selectedAula.data, idioma === "pt" ? "pt-BR" : "en-US")} · {selectedAula.hora}
                 </p>
               </div>
 
@@ -282,7 +287,7 @@ export default function Calendario() {
                 className="w-full flex items-center justify-center gap-2 bg-blue-700 text-white py-3 rounded-xl font-semibold hover:bg-blue-800 transition"
               >
                 <Video size={18} />
-                Entrar na aula
+                {t.joinClass}
               </a>
             ) : (
               <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 py-3 px-4 rounded-xl font-semibold">
@@ -296,7 +301,7 @@ export default function Calendario() {
               onClick={() => setSelectedAula(null)}
               className="w-full text-sm text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition"
             >
-              Fechar
+              {t.close}
             </button>
           </div>
         </div>

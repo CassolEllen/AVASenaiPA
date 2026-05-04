@@ -3,14 +3,12 @@ import {
   BookOpen,
   CheckCircle2,
   Flame,
-  GraduationCap,
   Lock,
   Mail,
   Settings,
   Trophy,
-  UserRound,
-  Zap,
 } from "lucide-react";
+import { useIdioma } from "../hooks/useIdioma";
 
 type Conquista = {
   titulo: string;
@@ -19,70 +17,174 @@ type Conquista = {
   conquistada: boolean;
 };
 
-const conquistas: Conquista[] = [
-  {
-    titulo: "Primeira Entrega",
-    descricao: "Você enviou sua primeira atividade no AVA.",
-    emoji: "🎯",
-    conquistada: true,
+const profileText = {
+  pt: {
+    registration: "Matrícula",
+    semester: "ADS · 4º Semestre",
+    settings: "Configurações",
+    stats: {
+      classesCompleted: "Aulas concluídas",
+      classesDescription: "de 30 aulas",
+      submittedActivities: "Atividades enviadas",
+      pendingActivities: "2 pendentes",
+      currentStreak: "Sequência atual",
+      streakValue: "3 dias",
+      keepGoing: "continue assim",
+    },
+    achievementsTitle: "Conquistas",
+    achievementsProgress: "conquistas desbloqueadas",
+    unlocked: "Conquista desbloqueada",
+    locked: "Conquista bloqueada",
+    achievements: [
+      {
+        titulo: "Primeira Entrega",
+        descricao: "Você enviou sua primeira atividade no AVA.",
+        emoji: "🎯",
+        conquistada: true,
+      },
+      {
+        titulo: "Sem Faltas",
+        descricao: "Participou das aulas recentes sem faltas registradas.",
+        emoji: "✅",
+        conquistada: true,
+      },
+      {
+        titulo: "Nota 10",
+        descricao: "Alcançou nota máxima em uma atividade avaliativa.",
+        emoji: "🏆",
+        conquistada: true,
+      },
+      {
+        titulo: "Maratonista",
+        descricao: "Concluiu várias aulas em sequência.",
+        emoji: "🏃‍♀️",
+        conquistada: true,
+      },
+      {
+        titulo: "Mentor",
+        descricao: "Ajudou colegas ou interagiu com professores pelo AVA.",
+        emoji: "🧑‍🏫",
+        conquistada: false,
+      },
+      {
+        titulo: "Explorador",
+        descricao: "Acessou diferentes áreas do AVA pela primeira vez.",
+        emoji: "👾",
+        conquistada: false,
+      },
+      {
+        titulo: "Entrega Antecipada",
+        descricao: "Entregou uma atividade antes do prazo final.",
+        emoji: "⚡",
+        conquistada: false,
+      },
+      {
+        titulo: "Em Chamas",
+        descricao: "Manteve uma sequência de estudos por vários dias.",
+        emoji: "🔥",
+        conquistada: false,
+      },
+      {
+        titulo: "Matéria Concluída",
+        descricao: "Concluiu todas as aulas de uma matéria.",
+        emoji: "🎓",
+        conquistada: false,
+      },
+      {
+        titulo: "Elite",
+        descricao: "Desbloqueie todas as conquistas principais do curso.",
+        emoji: "💎",
+        conquistada: false,
+      },
+    ],
   },
-  {
-    titulo: "Sem Faltas",
-    descricao: "Participou das aulas recentes sem faltas registradas.",
-    emoji: "✅",
-    conquistada: true,
+  en: {
+    registration: "Registration",
+    semester: "ADS · 4th Semester",
+    settings: "Settings",
+    stats: {
+      classesCompleted: "Completed classes",
+      classesDescription: "out of 30 classes",
+      submittedActivities: "Submitted activities",
+      pendingActivities: "2 pending",
+      currentStreak: "Current streak",
+      streakValue: "3 days",
+      keepGoing: "keep it up",
+    },
+    achievementsTitle: "Achievements",
+    achievementsProgress: "achievements unlocked",
+    unlocked: "Achievement unlocked",
+    locked: "Achievement locked",
+    achievements: [
+      {
+        titulo: "First Submission",
+        descricao: "You submitted your first activity in AVA.",
+        emoji: "🎯",
+        conquistada: true,
+      },
+      {
+        titulo: "No Absences",
+        descricao: "You attended recent classes without registered absences.",
+        emoji: "✅",
+        conquistada: true,
+      },
+      {
+        titulo: "Top Grade",
+        descricao: "You achieved the highest score in an evaluated activity.",
+        emoji: "🏆",
+        conquistada: true,
+      },
+      {
+        titulo: "Marathoner",
+        descricao: "You completed several classes in sequence.",
+        emoji: "🏃‍♀️",
+        conquistada: true,
+      },
+      {
+        titulo: "Mentor",
+        descricao: "You helped classmates or interacted with teachers in AVA.",
+        emoji: "🧑‍🏫",
+        conquistada: false,
+      },
+      {
+        titulo: "Explorer",
+        descricao: "You accessed different AVA areas for the first time.",
+        emoji: "👾",
+        conquistada: false,
+      },
+      {
+        titulo: "Early Submission",
+        descricao: "You submitted an activity before the deadline.",
+        emoji: "⚡",
+        conquistada: false,
+      },
+      {
+        titulo: "On Fire",
+        descricao: "You kept a study streak for several days.",
+        emoji: "🔥",
+        conquistada: false,
+      },
+      {
+        titulo: "Subject Completed",
+        descricao: "You completed all classes in a subject.",
+        emoji: "🎓",
+        conquistada: false,
+      },
+      {
+        titulo: "Elite",
+        descricao: "Unlock all main course achievements.",
+        emoji: "💎",
+        conquistada: false,
+      },
+    ],
   },
-  {
-    titulo: "Nota 10",
-    descricao: "Alcançou nota máxima em uma atividade avaliativa.",
-    emoji: "🏆",
-    conquistada: true,
-  },
-  {
-    titulo: "Maratonista",
-    descricao: "Concluiu várias aulas em sequência.",
-    emoji: "🏃‍♀️",
-    conquistada: true,
-  },
-  {
-    titulo: "Mentor",
-    descricao: "Ajudou colegas ou interagiu com professores pelo AVA.",
-    emoji: "🧑‍🏫",
-    conquistada: false,
-  },
-  {
-    titulo: "Explorador",
-    descricao: "Acessou diferentes áreas do AVA pela primeira vez.",
-    emoji: "👾",
-    conquistada: false,
-  },
-  {
-    titulo: "Entrega Antecipada",
-    descricao: "Entregou uma atividade antes do prazo final.",
-    emoji: "⚡",
-    conquistada: false,
-  },
-  {
-    titulo: "Em Chamas",
-    descricao: "Manteve uma sequência de estudos por vários dias.",
-    emoji: "🔥",
-    conquistada: false,
-  },
-  {
-    titulo: "Matéria Concluída",
-    descricao: "Concluiu todas as aulas de uma matéria.",
-    emoji: "🎓",
-    conquistada: false,
-  },
-  {
-    titulo: "Elite",
-    descricao: "Desbloqueie todas as conquistas principais do curso.",
-    emoji: "💎",
-    conquistada: false,
-  },
-];
+};
 
 export default function Perfil() {
+  const { idioma } = useIdioma();
+  const t = profileText[idioma];
+
+  const conquistas = t.achievements;
   const totalConquistas = conquistas.length;
   const desbloqueadas = conquistas.filter((c) => c.conquistada).length;
   const progresso = Math.round((desbloqueadas / totalConquistas) * 100);
@@ -100,11 +202,11 @@ export default function Perfil() {
           </h1>
 
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            Matrícula: 2021SI0043
+            {t.registration}: 2021SI0043
           </p>
 
           <span className="inline-flex mt-4 px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-sm font-semibold">
-            ADS · 4º Semestre
+            {t.semester}
           </span>
 
           <div className="mt-6 space-y-3 text-sm text-slate-500 dark:text-slate-400">
@@ -115,7 +217,7 @@ export default function Perfil() {
 
             <div className="flex items-center justify-center gap-2 text-blue-700 dark:text-blue-400 font-semibold">
               <Settings size={16} />
-              Configurações
+              {t.settings}
             </div>
           </div>
         </aside>
@@ -124,23 +226,23 @@ export default function Perfil() {
           <section className="grid grid-cols-3 gap-4">
             <StatCard
               icon={<BookOpen size={20} />}
-              label="Aulas concluídas"
+              label={t.stats.classesCompleted}
               value="12"
-              description="de 30 aulas"
+              description={t.stats.classesDescription}
             />
 
             <StatCard
               icon={<Trophy size={20} />}
-              label="Atividades enviadas"
+              label={t.stats.submittedActivities}
               value="8"
-              description="2 pendentes"
+              description={t.stats.pendingActivities}
             />
 
             <StatCard
               icon={<Flame size={20} />}
-              label="Sequência atual"
-              value="3 dias"
-              description="continue assim"
+              label={t.stats.currentStreak}
+              value={t.stats.streakValue}
+              description={t.stats.keepGoing}
             />
           </section>
 
@@ -148,14 +250,14 @@ export default function Perfil() {
             <div className="flex items-center gap-2 mb-4">
               <Award size={20} className="text-blue-700 dark:text-blue-400" />
               <h2 className="font-bold text-xl text-slate-900 dark:text-white">
-                Conquistas
+                {t.achievementsTitle}
               </h2>
             </div>
 
             <div className="bg-slate-100 dark:bg-slate-900 rounded-2xl p-4 mb-5">
               <div className="flex justify-between text-sm font-semibold text-slate-700 dark:text-slate-200 mb-2">
                 <span>
-                  {desbloqueadas} de {totalConquistas} conquistas desbloqueadas
+                  {desbloqueadas} de {totalConquistas} {t.achievementsProgress}
                 </span>
                 <span>{progresso}%</span>
               </div>
@@ -170,7 +272,12 @@ export default function Perfil() {
 
             <div className="grid grid-cols-4 gap-4">
               {conquistas.map((conquista) => (
-                <AchievementCard key={conquista.titulo} {...conquista} />
+                <AchievementCard
+                  key={conquista.titulo}
+                  {...conquista}
+                  unlockedText={t.unlocked}
+                  lockedText={t.locked}
+                />
               ))}
             </div>
           </section>
@@ -215,7 +322,12 @@ function AchievementCard({
   descricao,
   emoji,
   conquistada,
-}: Conquista) {
+  unlockedText,
+  lockedText,
+}: Conquista & {
+  unlockedText: string;
+  lockedText: string;
+}) {
   return (
     <div className="relative group">
       <div
@@ -263,7 +375,7 @@ function AchievementCard({
           <p className="font-bold mb-1">{titulo}</p>
           <p className="text-slate-300">{descricao}</p>
           <p className="mt-2 text-[10px] text-slate-400">
-            {conquistada ? "Conquista desbloqueada" : "Conquista bloqueada"}
+            {conquistada ? unlockedText : lockedText}
           </p>
         </div>
       </div>

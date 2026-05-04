@@ -1,8 +1,13 @@
+import { useIdioma } from "../hooks/useIdioma";
+import { textos } from "../i18n";
+
 export default function Header() {
+  const { idioma } = useIdioma();
+
   return (
     <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex items-center justify-between transition-colors">
       <input
-        placeholder="Buscar..."
+        placeholder={textos[idioma].header.buscar}
         className="bg-gray-100 dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 px-4 py-2 rounded-lg w-96 outline-none"
       />
 

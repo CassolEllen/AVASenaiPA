@@ -7,6 +7,8 @@ import {
   Trash2,
   UserRound,
 } from "lucide-react";
+import { useIdioma } from "../hooks/useIdioma";
+import { textos } from "../i18n";
 
 type Conversa = {
   id: number;
@@ -109,21 +111,20 @@ const mensagensIniciais: Record<number, Mensagem[]> = {
   ],
 };
 
-function carregarConversas() {
-  const data = localStorage.getItem(STORAGE_CONVERSAS);
-  return data ? JSON.parse(data) : conversasIniciais;
-}
-
-function carregarMensagens() {
-  const data = localStorage.getItem(STORAGE_MENSAGENS);
-  return data ? JSON.parse(data) : mensagensIniciais;
-}
 
 export default function Mensagens() {
-  const [conversas, setConversas] = useState<Conversa[]>(carregarConversas);
+  const { idioma } = useIdioma();
+  const t = textos[idioma].mensagens;
+
+  const [conversas, setConversas] = useState<Conversa[]>(() => {
+    const data = localStorage.getItem(STORAGE_CONVERSAS);
+    return data ? JSON.parse(data) : t.initialConversations;
+  });
   const [chatAtivo, setChatAtivo] = useState<number | null>(1);
-  const [mensagens, setMensagens] =
-    useState<Record<number, Mensagem[]>>(carregarMensagens);
+  const [mensagens, setMensagens] = useState<Record<number, Mensagem[]>>(() => {
+    const data = localStorage.getItem(STORAGE_MENSAGENS);
+    return data ? JSON.parse(data) : t.initialMessages;
+  });
   const [novaMensagem, setNovaMensagem] = useState("");
   const [busca, setBusca] = useState("");
   const [mostrandoNovoChat, setMostrandoNovoChat] = useState(false);
@@ -201,7 +202,7 @@ export default function Mensagens() {
 
     if (!conversa || conversa.tipo === "automatico") return;
 
-    const confirmado = confirm(`Deseja excluir o chat com ${conversa.nome}?`);
+    const confirmado = confirm(`${t.deleteChatConfirm} ${conversa.nome}?`);
 
     if (!confirmado) return;
 
@@ -262,11 +263,11 @@ export default function Mensagens() {
       <aside className="w-[340px] border-r border-slate-100 dark:border-slate-700 flex flex-col">
         <div className="p-5 border-b border-slate-100 dark:border-slate-700">
           <h1 className="text-xl font-bold text-slate-900 dark:text-white">
-            Mensagens
+            {t.title}
           </h1>
 
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            Converse com professores e acompanhe lembretes
+            {t.subtitle}
           </p>
 
           <div className="mt-4 relative">
@@ -278,7 +279,7 @@ export default function Mensagens() {
             <input
               value={busca}
               onChange={(e) => setBusca(e.target.value)}
-              placeholder="Buscar professor ou disciplina..."
+              placeholder={t.searchPlaceholder}
               className="w-full bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 rounded-xl pl-10 pr-4 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/40"
             />
           </div>
@@ -288,7 +289,7 @@ export default function Mensagens() {
             className="mt-3 w-full bg-blue-700 text-white py-2 rounded-xl text-sm font-semibold hover:bg-blue-800 transition flex items-center justify-center gap-2"
           >
             <MessageCirclePlus size={17} />
-            Novo chat
+            {t.newChat}
           </button>
 
           {mostrandoNovoChat && (
@@ -350,7 +351,7 @@ export default function Mensagens() {
 
                         {isAutomatic && (
                           <span className="text-[10px] bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300 px-2 py-0.5 rounded-full font-semibold">
-                            Sistema
+                            {t.systemTag}
                           </span>
                         )}
                       </div>
@@ -372,7 +373,7 @@ export default function Mensagens() {
                           excluirChat(conversa.id);
                         }}
                         className="opacity-0 group-hover:opacity-100 text-red-500 hover:text-red-700 transition"
-                        title="Excluir chat"
+                        title={t.deleteChatTitle}
                       >
                         <Trash2 size={17} />
                       </button>
@@ -385,7 +386,7 @@ export default function Mensagens() {
 
           {conversasFiltradas.length === 0 && (
             <p className="text-sm text-slate-500 dark:text-slate-400 p-5">
-              Nenhuma conversa encontrada.
+              {t.noConversations}
             </p>
           )}
         </div>
@@ -447,8 +448,7 @@ export default function Mensagens() {
             {conversaAtiva.tipo === "automatico" ? (
               <div className="p-4 border-t border-slate-100 dark:border-slate-700 bg-white dark:bg-slate-800">
                 <p className="text-sm text-slate-500 dark:text-slate-400 text-center">
-                  Esta conversa é automática. Apenas lembretes do sistema são
-                  exibidos aqui.
+                  {t.chatNote}
                 </p>
               </div>
             ) : (
@@ -459,7 +459,7 @@ export default function Mensagens() {
                   onKeyDown={(e) => {
                     if (e.key === "Enter") enviarMensagem();
                   }}
-                  placeholder="Digite sua mensagem para o professor..."
+                  placeholder={t.messagePlaceholder}
                   className="flex-1 bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/40"
                 />
 
@@ -468,14 +468,14 @@ export default function Mensagens() {
                   className="bg-blue-700 text-white px-5 rounded-xl font-semibold hover:bg-blue-800 transition flex items-center gap-2"
                 >
                   <Send size={17} />
-                  Enviar
+                  {t.send}
                 </button>
               </div>
             )}
           </>
         ) : (
           <div className="flex-1 flex items-center justify-center text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900">
-            Selecione uma conversa para iniciar.
+            {t.selectConversation}
           </div>
         )}
       </main>

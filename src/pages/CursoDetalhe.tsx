@@ -9,6 +9,8 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
+import { useIdioma } from "../hooks/useIdioma";
+import { textos } from "../i18n";
 
 const cursos = [
   {
@@ -247,6 +249,8 @@ const cursos = [
 export default function CursoDetalhe() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { idioma } = useIdioma();
+  const t = textos[idioma].cursoDetalhe;
 
   const curso = cursos.find((c) => c.id === id);
 
@@ -281,7 +285,7 @@ export default function CursoDetalhe() {
   }
 
   if (!curso) {
-    return <p>Curso não encontrado</p>;
+    return <p>{t.courseNotFound}</p>;
   }
 
   const totalLessons = curso.semestres.reduce(
@@ -306,19 +310,17 @@ export default function CursoDetalhe() {
         className="flex items-center gap-2 text-sm text-slate-500 hover:text-blue-600"
       >
         <ArrowLeft size={16} />
-        Voltar para cursos
+        {t.back}
       </button>
 
       <section className="bg-gradient-to-r from-blue-700 to-cyan-500 rounded-2xl p-6 text-white shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
-        <p className="text-sm opacity-90">Curso</p>
+        <p className="text-sm opacity-90">{t.courseLabel}</p>
         <h1 className="text-2xl font-bold mt-1">{curso.titulo}</h1>
-        <p className="text-sm opacity-90 mt-1">
-          Semestres, matérias e aulas presenciais/online
-        </p>
+        <p className="text-sm opacity-90 mt-1">{t.description}</p>
 
         <div className="mt-5">
           <div className="flex justify-between text-sm mb-2">
-            <span>Progresso geral</span>
+            <span>{t.progressGeneral}</span>
             <span>{courseProgress}%</span>
           </div>
 
@@ -366,10 +368,10 @@ export default function CursoDetalhe() {
               >
                 <div className="text-left">
                   <h2 className="text-lg font-bold">
-                    {semestre.numero}º Semestre
+                    {semestre.numero}º {t.semester}
                   </h2>
                   <p className="text-sm text-slate-500">
-                    {semesterCompleted} de {semesterLessons.length} aulas concluídas
+                    {semesterCompleted} de {semesterLessons.length} {t.lessonsCompleted}
                   </p>
                 </div>
 
@@ -420,7 +422,7 @@ export default function CursoDetalhe() {
                           </div>
 
                           <span className="text-sm font-semibold text-blue-700">
-                            {materiaProgress}% concluído
+                            {materiaProgress}% {t.completed}
                           </span>
                         </div>
 
@@ -456,8 +458,8 @@ export default function CursoDetalhe() {
                                     }
                                     title={
                                       isCompleted
-                                        ? "Marcar como não concluída"
-                                        : "Marcar como concluída"
+                                        ? t.markIncomplete
+                                        : t.markComplete
                                     }
                                   >
                                     {isCompleted ? (
@@ -491,7 +493,7 @@ export default function CursoDetalhe() {
                                     className="flex items-center gap-2 bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-2 rounded-lg text-sm font-semibold"
                                   >
                                     <Video size={16} />
-                                    Acessar Meet
+                                    {t.accessMeet}
                                   </a>
                                 ) : (
                                   <div className="flex items-center gap-2 text-slate-600 text-sm">

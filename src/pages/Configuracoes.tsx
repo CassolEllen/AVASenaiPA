@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Bell, Globe, Lock, Moon, Sun, Type } from "lucide-react";
+import { useIdioma } from "../hooks/useIdioma";
+import { textos } from "../i18n";
 
 type Fonte = "pequeno" | "medio" | "grande";
-type Idioma = "pt" | "en";
 
 export default function Configuracoes() {
   const [temaEscuro, setTemaEscuro] = useState(false);
@@ -12,7 +13,9 @@ export default function Configuracoes() {
   const [eventos, setEventos] = useState(false);
   const [ocultarNotas, setOcultarNotas] = useState(false);
   const [fonte, setFonte] = useState<Fonte>("medio");
-  const [idioma, setIdioma] = useState<Idioma>("pt");
+
+  const { idioma, setIdioma } = useIdioma();
+  const t = textos[idioma].configuracoes;
 
   useEffect(() => {
     const configSalva = localStorage.getItem("ava_configuracoes");
@@ -27,7 +30,6 @@ export default function Configuracoes() {
       setEventos(config.eventos ?? false);
       setOcultarNotas(config.ocultarNotas ?? false);
       setFonte(config.fonte ?? "medio");
-      setIdioma(config.idioma ?? "pt");
     }
   }, []);
 
@@ -40,7 +42,6 @@ export default function Configuracoes() {
       eventos,
       ocultarNotas,
       fonte,
-      idioma,
     };
 
     localStorage.setItem("ava_configuracoes", JSON.stringify(config));
@@ -61,51 +62,7 @@ export default function Configuracoes() {
     eventos,
     ocultarNotas,
     fonte,
-    idioma,
   ]);
-
-  const textos = {
-    pt: {
-      titulo: "Configurações",
-      tema: "Tema",
-      claro: "Claro",
-      escuro: "Escuro",
-      notificacoes: "Notificações",
-      novasNotas: "Novas Notas",
-      mensagens: "Mensagens",
-      lembretesAula: "Lembretes de Aula",
-      eventos: "Eventos",
-      tamanhoFonte: "Tamanho da fonte",
-      pequeno: "Pequeno",
-      medio: "Médio",
-      grande: "Grande",
-      ocultarNotas: "Ocultar notas",
-      ocultarNotasDesc: "Esconde suas notas de outros alunos",
-      idioma: "Idioma",
-      versao: "Versão 1.0.0 – SENAI AVA",
-    },
-    en: {
-      titulo: "Settings",
-      tema: "Theme",
-      claro: "Light",
-      escuro: "Dark",
-      notificacoes: "Notifications",
-      novasNotas: "New grades",
-      mensagens: "Messages",
-      lembretesAula: "Class reminders",
-      eventos: "Events",
-      tamanhoFonte: "Font size",
-      pequeno: "Small",
-      medio: "Medium",
-      grande: "Large",
-      ocultarNotas: "Hide grades",
-      ocultarNotasDesc: "Hide your grades from other students",
-      idioma: "Language",
-      versao: "Version 1.0.0 – SENAI AVA",
-    },
-  };
-
-  const t = textos[idioma];
 
   return (
     <div className="max-w-[1000px] mx-auto space-y-5 pb-8 text-slate-900 dark:text-white transition-colors duration-300">
@@ -180,7 +137,7 @@ export default function Configuracoes() {
             { label: "Português", value: "pt" },
             { label: "English", value: "en" },
           ]}
-          onChange={(value) => setIdioma(value as Idioma)}
+          onChange={(value) => setIdioma(value as "pt" | "en")}
         />
       </SettingCard>
 

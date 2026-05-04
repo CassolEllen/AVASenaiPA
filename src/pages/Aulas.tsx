@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 import { CalendarDays, MapPin, Video, Star } from "lucide-react";
+import { useIdioma } from "../hooks/useIdioma";
+import { textos } from "../i18n";
 
 const aulas = [
   {
@@ -53,8 +55,14 @@ const aulas = [
 
 type Filtro = "Todas" | "Presencial" | "Online";
 
-function formatarData(data: string) {
-  return new Date(`${data}T12:00:00`).toLocaleDateString("pt-BR");
+function formatarData(data: string, idioma: "pt" | "en") {
+  return new Date(`${data}T12:00:00`).toLocaleDateString(
+    idioma === "pt" ? "pt-BR" : "en-US",
+    {
+      day: "2-digit",
+      month: "short",
+    }
+  );
 }
 
 function hojeISO() {
@@ -67,6 +75,8 @@ function hojeISO() {
 }
 
 export default function Aulas() {
+  const { idioma } = useIdioma();
+  const t = textos[idioma].aulas;
   const [filtro, setFiltro] = useState<Filtro>("Todas");
 
   const aulasOrdenadas = useMemo(() => {
@@ -98,10 +108,10 @@ export default function Aulas() {
 
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-            Aulas
+            {t.title}
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            Acompanhe suas aulas presenciais e online
+            {t.subtitle}
           </p>
         </div>
       </header>
@@ -111,10 +121,10 @@ export default function Aulas() {
           <div>
             <div className="flex items-center gap-2 text-sm opacity-90">
               <Star size={16} />
-              Próxima aula
+              {t.nextClassLabel}
             </div>
 
-            <h2 className="text-2xl font-bold mt-2">{proximaAula.materia}</h2>
+            <h2 className="text-2xl font-bold mt-2">{t.subjects[proximaAula.materia] || proximaAula.materia}</h2>
 
             <p className="text-sm opacity-90 mt-1">
               {proximaAula.professor} · {formatarData(proximaAula.data)} ·{" "}
@@ -130,12 +140,12 @@ export default function Aulas() {
               className="bg-white text-blue-700 px-5 py-3 rounded-xl text-sm font-bold hover:bg-blue-50 transition flex items-center gap-2"
             >
               <Video size={16} />
-              Entrar no Meet
+              {t.actions.accessMeet}
             </a>
           ) : (
             <div className="bg-white/20 px-5 py-3 rounded-xl text-sm font-semibold flex items-center gap-2">
               <MapPin size={16} />
-              {proximaAula.local}
+              {t.locations[proximaAula.local] || proximaAula.local}
             </div>
           )}
         </section>
@@ -144,17 +154,17 @@ export default function Aulas() {
       <div className="flex gap-3 flex-wrap">
         <Filter
           active={filtro === "Todas"}
-          label={`Todas (${aulas.length})`}
+          label={`${t.filters.all} (${aulas.length})`}
           onClick={() => setFiltro("Todas")}
         />
         <Filter
           active={filtro === "Presencial"}
-          label={`Presenciais (${aulas.filter((a) => a.tipo === "Presencial").length})`}
+          label={`${t.filters.presencial} (${aulas.filter((a) => a.tipo === "Presencial").length})`}
           onClick={() => setFiltro("Presencial")}
         />
         <Filter
           active={filtro === "Online"}
-          label={`Online (${aulas.filter((a) => a.tipo === "Online").length})`}
+          label={`${t.filters.online} (${aulas.filter((a) => a.tipo === "Online").length})`}
           onClick={() => setFiltro("Online")}
         />
       </div>
@@ -166,6 +176,7 @@ export default function Aulas() {
             {...aula}
             isToday={aula.data === hoje}
             isNext={proximaAula === aula}
+            idioma={idioma}
           />
         ))}
       </section>
@@ -207,6 +218,7 @@ function AulaCard({
   meetUrl,
   isToday,
   isNext,
+  idioma,
 }: {
   materia: string;
   professor: string;
@@ -218,8 +230,22 @@ function AulaCard({
   meetUrl?: string;
   isToday: boolean;
   isNext: boolean;
+  idioma: "pt" | "en";
 }) {
+  const t = textos[idioma].aulas;
   const isOnline = tipo === "Online";
+  const statusText =
+    status === "Em andamento"
+      ? t.status.emAndamento
+      : status === "Concluída"
+      ? t.status.concluida
+      : status === "Pendente"
+      ? t.status.pendente
+      : status === "Enviado"
+      ? t.status.enviado
+      : status === "Atrasado"
+      ? t.status.atrasado
+      : status;
 
   const statusColor =
     status === "Em andamento"
@@ -228,6 +254,7 @@ function AulaCard({
       ? "bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300"
       : "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300";
 
+  const tipoText = isOnline ? t.tags.online : t.tags.inPerson;
   const tipoColor = isOnline
     ? "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
     : "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300";
@@ -246,18 +273,18 @@ function AulaCard({
         <div>
           <div className="flex items-center gap-2 flex-wrap">
             <h2 className="font-bold text-lg text-slate-900 dark:text-white">
-              {materia}
+              {t.subjects[materia] || materia}
             </h2>
 
             {isToday && (
               <span className="text-xs px-2 py-1 rounded-full bg-blue-700 text-white font-semibold">
-                Hoje
+                {t.tags.today}
               </span>
             )}
 
             {isNext && !isToday && (
               <span className="text-xs px-2 py-1 rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300 font-semibold">
-                Próxima
+                {t.tags.next}
               </span>
             )}
           </div>
@@ -268,17 +295,17 @@ function AulaCard({
         </div>
 
         <span className={`text-xs px-3 py-1 rounded-full font-semibold ${statusColor}`}>
-          {status}
+          {statusText}
         </span>
       </div>
 
       <div className="flex flex-wrap gap-2">
         <span className={`text-xs px-3 py-1 rounded-full font-semibold ${tipoColor}`}>
-          {tipo}
+          {tipoText}
         </span>
 
         <span className="text-xs px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-semibold">
-          {formatarData(data)}
+          {formatarData(data, idioma)}
         </span>
 
         <span className="text-xs px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-semibold">
@@ -295,12 +322,12 @@ function AulaCard({
             className="flex items-center gap-2 bg-blue-700 text-white hover:bg-blue-800 px-4 py-2 rounded-xl text-sm font-semibold transition"
           >
             <Video size={16} />
-            Acessar Meet
+            {t.actions.accessMeet}
           </a>
         ) : (
           <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm bg-slate-100 dark:bg-slate-700 px-4 py-2 rounded-xl">
             <MapPin size={16} />
-            {local}
+            {t.locations[local] || local}
           </div>
         )}
       </div>
