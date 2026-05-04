@@ -253,7 +253,6 @@ export default function CursoDetalhe() {
   const t = textos[idioma].cursoDetalhe;
 
   const curso = cursos.find((c) => c.id === id);
-
   const storageKey = `curso-progress-${id}`;
 
   const [completedLessons, setCompletedLessons] = useState<string[]>([]);
@@ -285,16 +284,15 @@ export default function CursoDetalhe() {
   }
 
   if (!curso) {
-    return <p>{t.courseNotFound}</p>;
+    return (
+      <p className="text-slate-900 dark:text-white">{t.courseNotFound}</p>
+    );
   }
 
   const totalLessons = curso.semestres.reduce(
     (total, semestre) =>
       total +
-      semestre.materias.reduce(
-        (sum, materia) => sum + materia.aulas.length,
-        0
-      ),
+      semestre.materias.reduce((sum, materia) => sum + materia.aulas.length, 0),
     0
   );
 
@@ -307,13 +305,13 @@ export default function CursoDetalhe() {
     <div className="max-w-[1100px] mx-auto space-y-6">
       <button
         onClick={() => navigate("/cursos")}
-        className="flex items-center gap-2 text-sm text-slate-500 hover:text-blue-600"
+        className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
       >
         <ArrowLeft size={16} />
         {t.back}
       </button>
 
-      <section className="bg-gradient-to-r from-blue-700 to-cyan-500 rounded-2xl p-6 text-white shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+      <section className="bg-gradient-to-r from-blue-700 to-cyan-500 rounded-3xl p-6 text-white shadow-[0_8px_30px_rgba(15,23,42,0.12)]">
         <p className="text-sm opacity-90">{t.courseLabel}</p>
         <h1 className="text-2xl font-bold mt-1">{curso.titulo}</h1>
         <p className="text-sm opacity-90 mt-1">{t.description}</p>
@@ -341,8 +339,7 @@ export default function CursoDetalhe() {
 
           const semesterLessonIds = semestre.materias.flatMap((materia) =>
             materia.aulas.map(
-              (aula) =>
-                `${semestre.numero}-${materia.nome}-${aula.titulo}`
+              (aula) => `${semestre.numero}-${materia.nome}-${aula.titulo}`
             )
           );
 
@@ -360,35 +357,40 @@ export default function CursoDetalhe() {
           return (
             <section
               key={semestre.numero}
-              className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] overflow-hidden"
+              className="bg-white dark:bg-slate-800 rounded-3xl shadow-[0_8px_30px_rgba(15,23,42,0.08)] border border-slate-100 dark:border-slate-700 overflow-hidden transition-colors"
             >
               <button
                 onClick={() => toggleSemester(semestre.numero)}
-                className="w-full p-5 flex items-center justify-between hover:bg-slate-50 transition"
+                className="w-full p-5 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/60 transition"
               >
                 <div className="text-left">
-                  <h2 className="text-lg font-bold">
+                  <h2 className="text-lg font-bold text-slate-900 dark:text-white">
                     {semestre.numero}º {t.semester}
                   </h2>
-                  <p className="text-sm text-slate-500">
-                    {semesterCompleted} de {semesterLessons.length} {t.lessonsCompleted}
+
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                    {semesterCompleted} de {semesterLessons.length}{" "}
+                    {t.lessonsCompleted}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-4">
                   <div className="w-32">
-                    <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                    <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                       <div
                         className="h-full bg-blue-700 rounded-full"
                         style={{ width: `${semesterProgress}%` }}
                       />
                     </div>
-                    <p className="text-xs text-slate-500 mt-1 text-right">
+
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 text-right">
                       {semesterProgress}%
                     </p>
                   </div>
 
-                  {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <span className="text-slate-700 dark:text-slate-300">
+                    {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  </span>
                 </div>
               </button>
 
@@ -400,8 +402,8 @@ export default function CursoDetalhe() {
                         `${semestre.numero}-${materia.nome}-${aula.titulo}`
                     );
 
-                    const materiaCompleted = materiaLessonIds.filter((lessonId) =>
-                      completedLessons.includes(lessonId)
+                    const materiaCompleted = materiaLessonIds.filter(
+                      (lessonId) => completedLessons.includes(lessonId)
                     ).length;
 
                     const materiaProgress = Math.round(
@@ -411,22 +413,25 @@ export default function CursoDetalhe() {
                     return (
                       <div
                         key={index}
-                        className="border border-slate-100 rounded-2xl p-5 space-y-4"
+                        className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 rounded-2xl p-5 space-y-4 transition-colors"
                       >
                         <div className="flex justify-between gap-4">
                           <div>
-                            <h3 className="font-bold">{materia.nome}</h3>
-                            <p className="text-sm text-slate-500">
+                            <h3 className="font-bold text-slate-900 dark:text-white">
+                              {materia.nome}
+                            </h3>
+
+                            <p className="text-sm text-slate-500 dark:text-slate-400">
                               {materia.professor}
                             </p>
                           </div>
 
-                          <span className="text-sm font-semibold text-blue-700">
+                          <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">
                             {materiaProgress}% {t.completed}
                           </span>
                         </div>
 
-                        <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                        <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                           <div
                             className="h-full bg-blue-700 rounded-full"
                             style={{ width: `${materiaProgress}%` }}
@@ -442,10 +447,10 @@ export default function CursoDetalhe() {
                             return (
                               <div
                                 key={i}
-                                className={`flex justify-between items-center rounded-xl p-4 transition ${
+                                className={`flex justify-between items-center rounded-xl p-4 border transition ${
                                   isCompleted
-                                    ? "bg-green-50 border border-green-100"
-                                    : "bg-slate-50 hover:bg-slate-100"
+                                    ? "bg-green-50 dark:bg-green-900/30 border-green-100 dark:border-green-800"
+                                    : "bg-slate-50 dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700"
                                 }`}
                               >
                                 <div className="flex items-start gap-3">
@@ -453,8 +458,8 @@ export default function CursoDetalhe() {
                                     onClick={() => toggleLesson(lessonId)}
                                     className={
                                       isCompleted
-                                        ? "text-green-600"
-                                        : "text-slate-400 hover:text-blue-700"
+                                        ? "text-green-600 dark:text-green-300"
+                                        : "text-slate-400 hover:text-blue-700 dark:hover:text-blue-300"
                                     }
                                     title={
                                       isCompleted
@@ -473,13 +478,14 @@ export default function CursoDetalhe() {
                                     <p
                                       className={`font-semibold ${
                                         isCompleted
-                                          ? "text-green-700"
-                                          : "text-slate-800"
+                                          ? "text-green-700 dark:text-green-300"
+                                          : "text-slate-800 dark:text-white"
                                       }`}
                                     >
                                       {aula.titulo}
                                     </p>
-                                    <p className="text-xs text-slate-500">
+
+                                    <p className="text-xs text-slate-500 dark:text-slate-400">
                                       {aula.data}
                                     </p>
                                   </div>
@@ -490,13 +496,13 @@ export default function CursoDetalhe() {
                                     href={aula.meetUrl}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="flex items-center gap-2 bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-2 rounded-lg text-sm font-semibold"
+                                    className="flex items-center gap-2 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-900/70 px-3 py-2 rounded-lg text-sm font-semibold transition"
                                   >
                                     <Video size={16} />
                                     {t.accessMeet}
                                   </a>
                                 ) : (
-                                  <div className="flex items-center gap-2 text-slate-600 text-sm">
+                                  <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm">
                                     <MapPin size={16} />
                                     {aula.local}
                                   </div>
