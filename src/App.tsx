@@ -1,5 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import ProtectedRoute from "./routes/ProtectedRoute";
 import AppLayout from "./layouts/AppLayout";
+
 import Home from "./pages/Home";
 import Aulas from "./pages/Aulas";
 import Cursos from "./pages/Cursos";
@@ -8,30 +11,30 @@ import Atividades from "./pages/Atividades";
 import AtividadeDetalhe from "./pages/AtividadeDetalhe";
 import Mensagens from "./pages/Mensagens";
 import Calendario from "./pages/Calendario";
+import Notificacoes from "./pages/Notificacoes";
 import Perfil from "./pages/Perfil";
 import Configuracoes from "./pages/Configuracoes";
-import Notificacoes from "./pages/Notificacoes";
 
-function App() {
+export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<AppLayout />}>
-          <Route index element={<Home />} />
-          <Route path="aulas" element={<Aulas />} />
-          <Route path="atividades" element={<Atividades />} />
-          <Route path="atividades/:id" element={<AtividadeDetalhe />} />
-          <Route path="cursos" element={<Cursos />} />
-          <Route path="cursos/:id" element={<CursoDetalhe />} />
-          <Route path="mensagens" element={<Mensagens />} />
-          <Route path="calendario" element={<Calendario />} />
-          <Route path="perfil" element={<Perfil />} />
-          <Route path="notificacoes" element={<Notificacoes />} />
-          <Route path="configuracoes" element={<Configuracoes />} />
+    <Routes>
+      <Route path="/login" element={<Login />} />
+
+      <Route element={<ProtectedRoute />}>
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/aulas" element={<Aulas />} />
+          <Route path="/cursos" element={<Cursos />} />
+          <Route path="/cursos/:id" element={<CursoDetalhe />} />
+          <Route path="/atividades" element={<Atividades />} />
+          <Route path="/atividades/:id" element={<AtividadeDetalhe />} />
+          <Route path="/mensagens" element={<Mensagens />} />
+          <Route path="/calendario" element={<Calendario />} />
+          <Route path="/notificacoes" element={<Notificacoes />} />
+          <Route path="/perfil" element={<Perfil />} />
+          <Route path="/configuracoes" element={<Configuracoes />} />
         </Route>
-      </Routes>
-    </BrowserRouter>
+      </Route>
+    </Routes>
   );
 }
-
-export default App;
