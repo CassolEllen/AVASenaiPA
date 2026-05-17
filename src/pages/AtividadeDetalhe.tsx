@@ -210,15 +210,17 @@ export default function AtividadeDetalhe() {
       <div className="max-w-[900px] mx-auto">
         <button
           onClick={() => navigate("/atividades")}
-          className="flex items-center gap-2 text-sm text-slate-500 hover:text-blue-600"
+          className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
         >
           <ArrowLeft size={16} />
           Voltar às atividades
         </button>
 
-        <div className="mt-6 bg-white rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
-          <h1 className="text-xl font-bold">Atividade não encontrada</h1>
-          <p className="text-sm text-slate-500 mt-2">
+        <div className="mt-6 bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-[0_8px_30px_rgba(15,23,42,0.08)] border border-slate-100 dark:border-slate-700">
+          <h1 className="text-xl font-bold text-slate-900 dark:text-white">
+            Atividade não encontrada
+          </h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
             Não foi possível encontrar os dados desta atividade.
           </p>
         </div>
@@ -231,16 +233,16 @@ export default function AtividadeDetalhe() {
 
   const statusStyle =
     currentStatus === "Enviado"
-      ? "bg-green-100 text-green-700"
+      ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300"
       : currentStatus === "Atrasado"
-      ? "bg-red-100 text-red-700"
-      : "bg-yellow-100 text-yellow-700";
+      ? "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300"
+      : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300";
 
   return (
     <div className="max-w-[900px] mx-auto space-y-6">
       <button
         onClick={() => navigate("/atividades")}
-        className="flex items-center gap-2 text-sm text-slate-500 hover:text-blue-600"
+        className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition"
       >
         <ArrowLeft size={16} />
         Voltar às atividades
@@ -253,44 +255,56 @@ export default function AtividadeDetalhe() {
           {currentStatus}
         </span>
 
-        <h1 className="text-2xl font-bold">{atividade.titulo}</h1>
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white leading-tight">
+          {atividade.titulo}
+        </h1>
 
-        <p className="text-slate-500 text-sm">
+        <p className="text-slate-600 dark:text-slate-300 text-sm font-medium">
           {atividade.disciplina} · {atividade.professor}
         </p>
       </div>
 
-      <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.05)]">
-        <p className="text-sm text-slate-500">Prazo de entrega</p>
-        <p className="font-semibold">{atividade.prazo}</p>
+      <div className="bg-white dark:bg-slate-800 rounded-3xl p-5 shadow-[0_8px_30px_rgba(15,23,42,0.08)] border border-slate-100 dark:border-slate-700">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
+          Prazo de entrega
+        </p>
+        <p className="font-semibold text-slate-900 dark:text-white">
+          {atividade.prazo}
+        </p>
       </div>
 
-      <div className="bg-white rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)] space-y-4">
+      <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-[0_8px_30px_rgba(15,23,42,0.08)] border border-slate-100 dark:border-slate-700 space-y-4">
         <div>
-          <h2 className="font-bold">Descrição</h2>
-          <p className="text-sm text-slate-600 mt-2">{atividade.descricao}</p>
+          <h2 className="font-bold text-slate-900 dark:text-white">
+            Descrição
+          </h2>
+          <p className="text-sm text-slate-600 dark:text-slate-300 mt-2">
+            {atividade.descricao}
+          </p>
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)] space-y-4">
-        <h2 className="font-bold">Enviar Trabalho</h2>
+      <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-[0_8px_30px_rgba(15,23,42,0.08)] border border-slate-100 dark:border-slate-700 space-y-4">
+        <h2 className="font-bold text-slate-900 dark:text-white">
+          Enviar Trabalho
+        </h2>
 
         {message && (
           <div
             className={`rounded-xl px-4 py-3 text-sm font-medium ${
               message.type === "success"
-                ? "bg-green-100 text-green-700"
-                : "bg-red-100 text-red-700"
+                ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300"
+                : "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300"
             }`}
           >
             {message.text}
           </div>
         )}
 
-        <div className="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center text-center gap-3">
-          <Upload size={30} className="text-slate-400" />
+        <div className="border-2 border-dashed border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 rounded-2xl p-8 flex flex-col items-center justify-center text-center gap-3">
+          <Upload size={30} className="text-slate-400 dark:text-slate-500" />
 
-          <p className="text-sm text-slate-600">
+          <p className="text-sm text-slate-600 dark:text-slate-300">
             {file
               ? `Arquivo selecionado: ${file.name}`
               : "Clique para selecionar o arquivo"}
@@ -299,24 +313,26 @@ export default function AtividadeDetalhe() {
           <input
             type="file"
             onChange={(e) => setFile(e.target.files?.[0] || null)}
-            className="text-sm"
+            className="text-sm text-slate-600 dark:text-slate-300"
           />
         </div>
 
         <button
           onClick={handleUpload}
           disabled={loading}
-          className="w-full bg-blue-700 text-white py-3 rounded-xl font-semibold hover:bg-blue-800 transition disabled:opacity-50"
+          className="w-full bg-blue-700 text-white py-3 rounded-xl font-semibold hover:bg-blue-800 active:scale-[0.98] transition disabled:opacity-50"
         >
           {loading ? "Enviando..." : "Enviar Trabalho"}
         </button>
       </div>
 
-      <div className="bg-white rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)] space-y-4">
-        <h2 className="font-bold">Arquivos enviados</h2>
+      <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-[0_8px_30px_rgba(15,23,42,0.08)] border border-slate-100 dark:border-slate-700 space-y-4">
+        <h2 className="font-bold text-slate-900 dark:text-white">
+          Arquivos enviados
+        </h2>
 
         {submissions.length === 0 ? (
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             Nenhum arquivo enviado para esta atividade ainda.
           </p>
         ) : (
@@ -324,14 +340,19 @@ export default function AtividadeDetalhe() {
             {submissions.map((submission) => (
               <div
                 key={submission.id}
-                className="flex items-center justify-between rounded-xl bg-slate-50 p-4"
+                className="flex items-center justify-between rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-700 p-4"
               >
                 <div className="flex items-center gap-3">
-                  <FileText size={20} className="text-blue-700" />
+                  <FileText
+                    size={20}
+                    className="text-blue-700 dark:text-blue-300"
+                  />
 
                   <div>
-                    <p className="font-semibold">{submission.file_name}</p>
-                    <p className="text-xs text-slate-500">
+                    <p className="font-semibold text-slate-900 dark:text-white">
+                      {submission.file_name}
+                    </p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
                       Enviado em{" "}
                       {new Date(submission.created_at).toLocaleString("pt-BR")}
                     </p>
@@ -343,7 +364,7 @@ export default function AtividadeDetalhe() {
                     href={submission.file_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-blue-700 hover:text-blue-900"
+                    className="text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-blue-200"
                     title="Baixar arquivo"
                   >
                     <Download size={20} />
