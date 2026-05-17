@@ -14,11 +14,13 @@ import Calendario from "./pages/Calendario";
 import Notificacoes from "./pages/Notificacoes";
 import Perfil from "./pages/Perfil";
 import Configuracoes from "./pages/Configuracoes";
+import Cadastro from "./pages/Cadastro";
 
 export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/cadastro" element={<Cadastro />} />
 
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
@@ -33,6 +35,7 @@ export default function App() {
           <Route path="/notificacoes" element={<Notificacoes />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/configuracoes" element={<Configuracoes />} />
+          <Route path="/cadastro" element={<Cadastro />} />
         </Route>
       </Route>
     </Routes>
