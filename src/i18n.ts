@@ -93,20 +93,26 @@ export const textos = {
       },
     },
     cursos: {
-      title: "Cursos",
-      subtitle: "Acompanhe seus cursos, matérias e aulas por semestre",
-      active: "1 ativo",
-      courseProgress: "ADS em andamento",
-      continueCourse: "Continuar curso",
-      semesters: "semestres",
-      completed: "concluído",
-      items: {
-        ads: {
-          titulo: "Análise e Desenvolvimento de Sistemas",
-          descricao: "Curso focado em desenvolvimento de software, banco de dados, sistemas web e qualidade.",
-        },
-      },
+  title: "Cursos",
+  subtitle: "Acompanhe seus cursos, matérias e aulas por semestre",
+  active: "1 ativo",
+  courseProgress: "ADS em andamento",
+  continueCourse: "Continuar curso",
+  semesters: "semestres",
+  completed: "concluído",
+  items: {
+    ads: {
+      titulo: "Análise e Desenvolvimento de Sistemas",
+      descricao:
+        "Curso focado em desenvolvimento de software, banco de dados, sistemas web e qualidade.",
     },
+    iaPratica: {
+      titulo: "IA na Prática",
+      descricao:
+        "Capacitação sobre fundamentos de Inteligência Artificial, modelos de linguagem e pensamento computacional.",
+    },
+  },
+},
     cursoDetalhe: {
       back: "Voltar para cursos",
       courseLabel: "Curso",
@@ -514,20 +520,26 @@ export const textos = {
       },
     },
     cursos: {
-      title: "Courses",
-      subtitle: "Track your courses, subjects, and classes by semester",
-      active: "1 active",
-      courseProgress: "ADS in progress",
-      continueCourse: "Continue course",
-      semesters: "semesters",
-      completed: "completed",
-      items: {
-        ads: {
-          titulo: "Systems Analysis and Development",
-          descricao: "Course focused on software development, databases, web systems and quality.",
-        },
-      },
+  title: "Courses",
+  subtitle: "Track your courses, subjects, and classes by semester",
+  active: "1 active",
+  courseProgress: "ADS in progress",
+  continueCourse: "Continue course",
+  semesters: "semesters",
+  completed: "completed",
+  items: {
+    ads: {
+      titulo: "Systems Analysis and Development",
+      descricao:
+        "Course focused on software development, databases, web systems and quality.",
     },
+    iaPratica: {
+      titulo: "AI in Practice",
+      descricao:
+        "Training on Artificial Intelligence fundamentals, language models and computational thinking.",
+    },
+  },
+},
     cursoDetalhe: {
       back: "Back to courses",
       courseLabel: "Course",

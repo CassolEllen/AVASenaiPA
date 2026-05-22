@@ -6,10 +6,17 @@ import { textos } from "../i18n";
 const cursos = [
   {
     id: "ads",
-    titulo: textos["pt"].cursos.items.ads.titulo,
-    descricao: textos["pt"].cursos.items.ads.descricao,
     progresso: 72,
     semestres: 5,
+    cargaHoraria: null,
+    categoria: "Graduação",
+  },
+  {
+    id: "iaPratica",
+    progresso: 0,
+    semestres: 2,
+    cargaHoraria: "46h",
+    categoria: "SCTEC",
   },
 ];
 
@@ -28,6 +35,7 @@ export default function Cursos() {
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
             {t.title}
           </h1>
+
           <p className="text-sm text-slate-500 dark:text-slate-400">
             {t.subtitle}
           </p>
@@ -45,23 +53,22 @@ export default function Cursos() {
 
 function CursoCard({
   id,
-  titulo,
-  descricao,
   progresso,
   semestres,
+  cargaHoraria,
+  categoria,
 }: {
-  id: string;
-  titulo: string;
-  descricao: string;
+  id: "ads" | "iaPratica";
   progresso: number;
   semestres: number;
+  cargaHoraria: string | null;
+  categoria: string;
 }) {
   const navigate = useNavigate();
   const { idioma } = useIdioma();
   const t = textos[idioma].cursos;
 
-  const translatedTitulo = t.items.ads.titulo;
-  const translatedDescricao = t.items.ads.descricao;
+  const cursoTexto = t.items[id];
 
   return (
     <article
@@ -70,12 +77,24 @@ function CursoCard({
     >
       <div className="flex justify-between items-start gap-4">
         <div>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-xs px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-semibold">
+              {categoria}
+            </span>
+
+            {cargaHoraria && (
+              <span className="text-xs px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-semibold">
+                {cargaHoraria}
+              </span>
+            )}
+          </div>
+
           <h2 className="font-bold text-lg text-slate-900 dark:text-white">
-            {translatedTitulo}
+            {cursoTexto.titulo}
           </h2>
 
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            {translatedDescricao}
+            {cursoTexto.descricao}
           </p>
         </div>
 
@@ -86,8 +105,13 @@ function CursoCard({
       </div>
 
       <div className="flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
-        <span>{semestres} {t.semesters}</span>
-        <span>{progresso}% {t.completed}</span>
+        <span>
+          {semestres} {t.semesters}
+        </span>
+
+        <span>
+          {progresso}% {t.completed}
+        </span>
       </div>
 
       <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">

@@ -24,44 +24,41 @@ const cursos = [
             nome: "Lógica de Programação",
             professor: "Prof. Ana Lima",
             aulas: [
-              { titulo: "Introdução à lógica", tipo: "Presencial", data: "16/02/2026", local: "Sala F07" },
-              { titulo: "Exercícios práticos", tipo: "Online", data: "Quarta · 19:00", meetUrl: "https://meet.google.com/abc-defg-hij" },
+              {
+                titulo: "Introdução à lógica",
+                tipo: "Presencial",
+                data: "16/02/2026",
+                local: "Sala F07",
+              },
+              {
+                titulo: "Exercícios práticos",
+                tipo: "Online",
+                data: "Quarta · 19:00",
+                meetUrl: "https://meet.google.com/abc-defg-hij",
+              },
             ],
           },
           {
             nome: "Fundamentos de Tecnologia da Informação",
             professor: "Prof. Marcos Silva",
             aulas: [
-              { titulo: "Conceitos de TI", tipo: "Presencial", data: "17/02/2026", local: "Sala F07" },
-              { titulo: "Sistemas computacionais", tipo: "Online", data: "18/02/2026", meetUrl: "https://meet.google.com/ti-fundamentos" },
-            ],
-          },
-          {
-            nome: "Matemática Aplicada",
-            professor: "Prof. Fernanda Costa",
-            aulas: [
-              { titulo: "Funções e lógica matemática", tipo: "Presencial", data: "19/02/2026", local: "Sala F07" },
-              { titulo: "Exercícios orientados", tipo: "Online", data: "20/02/2026", meetUrl: "https://meet.google.com/mat-aplicada" },
-            ],
-          },
-          {
-            nome: "Comunicação e Redação Técnica",
-            professor: "Prof. Renata Alves",
-            aulas: [
-              { titulo: "Comunicação profissional", tipo: "Presencial", data: "16/02/2026", local: "Sala F07" },
-              { titulo: "Documentação técnica", tipo: "Online", data: "18/02/2026", meetUrl: "https://meet.google.com/redacao-tecnica" },
-            ],
-          },
-          {
-            nome: "Algoritmos",
-            professor: "Prof. Daniel Rocha",
-            aulas: [
-              { titulo: "Variáveis e estruturas condicionais", tipo: "Presencial", data: "27/02/2026", local: "Laboratório 1" },
-              { titulo: "Laços de repetição", tipo: "Online", data: "04/03/2026", meetUrl: "https://meet.google.com/algoritmos" },
+              {
+                titulo: "Conceitos de TI",
+                tipo: "Presencial",
+                data: "17/02/2026",
+                local: "Sala F07",
+              },
+              {
+                titulo: "Sistemas computacionais",
+                tipo: "Online",
+                data: "18/02/2026",
+                meetUrl: "https://meet.google.com/ti-fundamentos",
+              },
             ],
           },
         ],
       },
+
       {
         numero: 2,
         materias: [
@@ -69,44 +66,23 @@ const cursos = [
             nome: "Banco de Dados",
             professor: "Prof. Carlos Souza",
             aulas: [
-              { titulo: "Modelagem de dados", tipo: "Presencial", data: "13/03/2026", local: "Sala F07" },
-              { titulo: "SQL na prática", tipo: "Online", data: "19/03/2026", meetUrl: "https://meet.google.com/sql-pratica" },
-            ],
-          },
-          {
-            nome: "Programação Orientada a Objetos",
-            professor: "Prof. Juliana Martins",
-            aulas: [
-              { titulo: "Classes e objetos", tipo: "Presencial", data: "22/03/2026", local: "Sala F07" },
-              { titulo: "Herança e polimorfismo", tipo: "Online", data: "29/03/2026", meetUrl: "https://meet.google.com/poo-aula" },
-            ],
-          },
-          {
-            nome: "Estrutura de Dados",
-            professor: "Prof. Doglas André Finco",
-            aulas: [
-              { titulo: "Pilhas e filas", tipo: "Presencial", data: "30/03/2026", local: "Sala F07" },
-              { titulo: "Listas encadeadas", tipo: "Online", data: "03/04/2026", meetUrl: "https://meet.google.com/estrutura-dados" },
-            ],
-          },
-          {
-            nome: "Sistemas Operacionais",
-            professor: "Prof. Ricardo Mendes",
-            aulas: [
-              { titulo: "Processos e memória", tipo: "Presencial", data: "10/04/2026", local: "Sala F07" },
-              { titulo: "Gerenciamento de arquivos", tipo: "Online", data: "13/04/2026", meetUrl: "https://meet.google.com/sistemas-operacionais" },
-            ],
-          },
-          {
-            nome: "Inglês Técnico",
-            professor: "Prof. Camila Torres",
-            aulas: [
-              { titulo: "Vocabulário técnico", tipo: "Presencial", data: "11/04/2026", local: "Sala F07" },
-              { titulo: "Leitura de documentação", tipo: "Online", data: "14/04/2026", meetUrl: "https://meet.google.com/ingles-tecnico" },
+              {
+                titulo: "Modelagem de dados",
+                tipo: "Presencial",
+                data: "13/03/2026",
+                local: "Sala F07",
+              },
+              {
+                titulo: "SQL na prática",
+                tipo: "Online",
+                data: "19/03/2026",
+                meetUrl: "https://meet.google.com/sql-pratica",
+              },
             ],
           },
         ],
       },
+
       {
         numero: 3,
         materias: [
@@ -114,44 +90,23 @@ const cursos = [
             nome: "Desenvolvimento Web",
             professor: "Prof. Matheus Pereira",
             aulas: [
-              { titulo: "HTML, CSS e responsividade", tipo: "Presencial", data: "17/04/2026", local: "Laboratório 1" },
-              { titulo: "React na prática", tipo: "Online", data: "19/04/2026", meetUrl: "https://meet.google.com/dev-web-react" },
-            ],
-          },
-          {
-            nome: "Engenharia de Software",
-            professor: "Prof. Roberto Dias",
-            aulas: [
-              { titulo: "Requisitos de software", tipo: "Presencial", data: "18/04/2026", local: "Sala 206" },
-              { titulo: "Modelagem e documentação", tipo: "Online", data: "20/04/2026", meetUrl: "https://meet.google.com/eng-software" },
-            ],
-          },
-          {
-            nome: "Redes de Computadores",
-            professor: "Prof. Fernanda Costa",
-            aulas: [
-              { titulo: "Protocolos de rede", tipo: "Presencial", data: "19/04/2026", local: "Sala 302" },
-              { titulo: "Configuração de redes", tipo: "Online", data: "21/04/2026", meetUrl: "https://meet.google.com/redes-computadores" },
-            ],
-          },
-          {
-            nome: "Interface e Experiência do Usuário",
-            professor: "Prof. Mariana Lopes",
-            aulas: [
-              { titulo: "Princípios de UX/UI", tipo: "Presencial", data: "23/04/2026", local: "Sala 203" },
-              { titulo: "Prototipação de interfaces", tipo: "Online", data: "26/04/2026", meetUrl: "https://meet.google.com/ux-ui" },
-            ],
-          },
-          {
-            nome: "Qualidade de Software",
-            professor: "Prof. Heitor Bilibio",
-            aulas: [
-              { titulo: "Testes funcionais", tipo: "Presencial", data: "30/04/2026", local: "Laboratório 2" },
-              { titulo: "Casos de teste", tipo: "Online", data: "03/05/2026", meetUrl: "https://meet.google.com/qualidade-software" },
+              {
+                titulo: "HTML, CSS e responsividade",
+                tipo: "Presencial",
+                data: "17/04/2026",
+                local: "Laboratório 1",
+              },
+              {
+                titulo: "React na prática",
+                tipo: "Online",
+                data: "19/04/2026",
+                meetUrl: "https://meet.google.com/dev-web-react",
+              },
             ],
           },
         ],
       },
+
       {
         numero: 4,
         materias: [
@@ -159,44 +114,23 @@ const cursos = [
             nome: "Desenvolvimento Mobile",
             professor: "Prof. Bruno Almeida",
             aulas: [
-              { titulo: "Introdução ao mobile", tipo: "Presencial", data: "05/05/2026", local: "Laboratório 3" },
-              { titulo: "Componentes mobile", tipo: "Online", data: "07/05/2026", meetUrl: "https://meet.google.com/dev-mobile" },
-            ],
-          },
-          {
-            nome: "Implantação de Sistemas",
-            professor: "Prof. Maximiano",
-            aulas: [
-              { titulo: "Ambientes de implantação", tipo: "Presencial", data: "08/05/2026", local: "Sala 301" },
-              { titulo: "Falhas de implantação", tipo: "Online", data: "10/05/2026", meetUrl: "https://meet.google.com/implantacao-sistemas" },
-            ],
-          },
-          {
-            nome: "Segurança da Informação",
-            professor: "Prof. Rafael Nunes",
-            aulas: [
-              { titulo: "Princípios de segurança", tipo: "Presencial", data: "13/05/2026", local: "Sala 205" },
-              { titulo: "Boas práticas em sistemas", tipo: "Online", data: "15/05/2026", meetUrl: "https://meet.google.com/seguranca-info" },
-            ],
-          },
-          {
-            nome: "APIs e Integrações",
-            professor: "Prof. Daniel Berrido",
-            aulas: [
-              { titulo: "REST APIs", tipo: "Presencial", data: "19/05/2026", local: "Laboratório 1" },
-              { titulo: "Integração com backend", tipo: "Online", data: "12/05/2026", meetUrl: "https://meet.google.com/apis-integracoes" },
-            ],
-          },
-          {
-            nome: "Gestão de Projetos",
-            professor: "Prof. Paula Andrade",
-            aulas: [
-              { titulo: "Planejamento de projetos", tipo: "Presencial", data: "20/05/2026", local: "Sala 102" },
-              { titulo: "Métodos ágeis", tipo: "Online", data: "27/05/2026", meetUrl: "https://meet.google.com/gestao-projetos" },
+              {
+                titulo: "Introdução ao mobile",
+                tipo: "Presencial",
+                data: "05/05/2026",
+                local: "Laboratório 3",
+              },
+              {
+                titulo: "Componentes mobile",
+                tipo: "Online",
+                data: "07/05/2026",
+                meetUrl: "https://meet.google.com/dev-mobile",
+              },
             ],
           },
         ],
       },
+
       {
         numero: 5,
         materias: [
@@ -204,40 +138,110 @@ const cursos = [
             nome: "Big Data, Analytics e Inteligência Artificial",
             professor: "Prof. Victor Cézar Bonatti Carvalho",
             aulas: [
-              { titulo: "Conceitos de Big Data", tipo: "Presencial", data: "03/06/2026", local: "Sala 304" },
-              { titulo: "Aplicações de IA", tipo: "Online", data: "10/06/2026", meetUrl: "https://meet.google.com/big-data-ia" },
+              {
+                titulo: "Conceitos de Big Data",
+                tipo: "Presencial",
+                data: "03/06/2026",
+                local: "Sala 304",
+              },
+              {
+                titulo: "Aplicações de IA",
+                tipo: "Online",
+                data: "10/06/2026",
+                meetUrl: "https://meet.google.com/big-data-ia",
+              },
             ],
           },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "iaPratica",
+    titulo: "IA na Prática",
+    semestres: [
+      {
+        numero: 1,
+        materias: [
           {
-            nome: "Arquitetura de Software",
-            professor: "Prof. Laura Batista",
+            nome: "Fundamentos da Inteligência Artificial",
+            professor: "SCTEC",
             aulas: [
-              { titulo: "Padrões arquiteturais", tipo: "Presencial", data: "12/06/2026", local: "Sala 306" },
-              { titulo: "Arquitetura em camadas", tipo: "Online", data: "16/06/2026", meetUrl: "https://meet.google.com/arquitetura-software" },
+              {
+                titulo: "Introdução à Inteligência Artificial",
+                tipo: "Online",
+                data: "14/04/2026",
+                meetUrl: "https://meet.google.com/ia-pratica",
+              },
+              {
+                titulo: "IA tradicional e pensamento computacional",
+                tipo: "Online",
+                data: "21/04/2026",
+                meetUrl: "https://meet.google.com/ia-pratica",
+              },
             ],
           },
+
           {
-            nome: "Projeto Integrador",
-            professor: "Prof. Gustavo Lima",
+            nome: "Modelos de Linguagem",
+            professor: "SCTEC",
             aulas: [
-              { titulo: "Definição do escopo", tipo: "Presencial", data: "19/06/2026", local: "Laboratório 2" },
-              { titulo: "Apresentação parcial", tipo: "Online", data: "22/06/2026", meetUrl: "https://meet.google.com/projeto-integrador" },
+              {
+                titulo: "Como funcionam os modelos de linguagem",
+                tipo: "Online",
+                data: "28/04/2026",
+                meetUrl: "https://meet.google.com/modelos-linguagem",
+              },
+              {
+                titulo: "Aplicações de IA generativa",
+                tipo: "Online",
+                data: "05/05/2026",
+                meetUrl: "https://meet.google.com/ia-generativa",
+              },
             ],
           },
+        ],
+      },
+
+      {
+        numero: 2,
+        materias: [
           {
-            nome: "Empreendedorismo e Inovação",
-            professor: "Prof. Patrícia Gomes",
+            nome: "IA na Prática",
+            professor: "SCTEC",
             aulas: [
-              { titulo: "Modelos de negócio", tipo: "Presencial", data: "24/06/2026", local: "Sala 201" },
-              { titulo: "Pitch de produto", tipo: "Online", data: "25/06/2026", meetUrl: "https://meet.google.com/empreendedorismo" },
+              {
+                titulo: "Prompts, automações e produtividade",
+                tipo: "Online",
+                data: "12/05/2026",
+                meetUrl: "https://meet.google.com/prompts-ia",
+              },
+              {
+                titulo: "Uso responsável da Inteligência Artificial",
+                tipo: "Online",
+                data: "19/05/2026",
+                meetUrl: "https://meet.google.com/ia-responsavel",
+              },
             ],
           },
+
           {
-            nome: "Tópicos Avançados em Desenvolvimento",
-            professor: "Prof. André Moreira",
+            nome: "Projeto Final com IA",
+            professor: "SCTEC",
             aulas: [
-              { titulo: "Boas práticas modernas", tipo: "Presencial", data: "29/06/2026", local: "Laboratório 3" },
-              { titulo: "Deploy e versionamento", tipo: "Online", data: "30/06/2026", meetUrl: "https://meet.google.com/topicos-avancados" },
+              {
+                titulo: "Desenvolvimento do projeto prático",
+                tipo: "Online",
+                data: "26/05/2026",
+                meetUrl: "https://meet.google.com/projeto-ia",
+              },
+              {
+                titulo: "Apresentação e encerramento",
+                tipo: "Online",
+                data: "13/06/2026",
+                meetUrl: "https://meet.google.com/apresentacao-ia",
+              },
             ],
           },
         ],
