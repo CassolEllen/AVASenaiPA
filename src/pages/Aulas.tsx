@@ -3,6 +3,23 @@ import { CalendarDays, MapPin, Video, Star } from "lucide-react";
 import { useIdioma } from "../hooks/useIdioma";
 import { textos } from "../i18n";
 
+type SubjectKey = keyof typeof textos.pt.aulas.subjects;
+type LocationKey = keyof typeof textos.pt.aulas.locations;
+
+function traduzirSubject(
+  subjects: typeof textos.pt.aulas.subjects,
+  materia: string
+) {
+  return subjects[materia as SubjectKey] ?? materia;
+}
+
+function traduzirLocation(
+  locations: typeof textos.pt.aulas.locations,
+  local: string
+) {
+  return locations[local as LocationKey] ?? local;
+}
+
 const aulas = [
   {
     materia: "Estrutura de Dados",
@@ -124,10 +141,10 @@ export default function Aulas() {
               {t.nextClassLabel}
             </div>
 
-            <h2 className="text-2xl font-bold mt-2">{t.subjects[proximaAula.materia] || proximaAula.materia}</h2>
+            <h2 className="text-2xl font-bold mt-2">{traduzirSubject(t.subjects, proximaAula.materia)}</h2>
 
             <p className="text-sm opacity-90 mt-1">
-              {proximaAula.professor} · {formatarData(proximaAula.data)} ·{" "}
+              {proximaAula.professor} · {formatarData(proximaAula.data, idioma)} ·{" "}
               {proximaAula.hora}
             </p>
           </div>
@@ -145,7 +162,7 @@ export default function Aulas() {
           ) : (
             <div className="bg-white/20 px-5 py-3 rounded-xl text-sm font-semibold flex items-center gap-2">
               <MapPin size={16} />
-              {t.locations[proximaAula.local] || proximaAula.local}
+              {traduzirLocation(t.locations, proximaAula.local)}
             </div>
           )}
         </section>
@@ -273,7 +290,7 @@ function AulaCard({
         <div>
           <div className="flex items-center gap-2 flex-wrap">
             <h2 className="font-bold text-lg text-slate-900 dark:text-white">
-              {t.subjects[materia] || materia}
+              {traduzirSubject(t.subjects, materia)}
             </h2>
 
             {isToday && (
@@ -327,7 +344,7 @@ function AulaCard({
         ) : (
           <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm bg-slate-100 dark:bg-slate-700 px-4 py-2 rounded-xl">
             <MapPin size={16} />
-            {t.locations[local] || local}
+            {traduzirLocation(t.locations, local)}
           </div>
         )}
       </div>

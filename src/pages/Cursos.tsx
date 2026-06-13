@@ -3,7 +3,17 @@ import { BookOpen, ChevronRight } from "lucide-react";
 import { useIdioma } from "../hooks/useIdioma";
 import { textos } from "../i18n";
 
-const cursos = [
+type CursoId = "ads" | "iaPratica";
+
+type CursoResumo = {
+  id: CursoId;
+  progresso: number;
+  semestres: number;
+  cargaHoraria: string | null;
+  categoria: string;
+};
+
+const cursos: CursoResumo[] = [
   {
     id: "ads",
     progresso: 72,
@@ -58,7 +68,7 @@ function CursoCard({
   cargaHoraria,
   categoria,
 }: {
-  id: "ads" | "iaPratica";
+  id: CursoId;
   progresso: number;
   semestres: number;
   cargaHoraria: string | null;

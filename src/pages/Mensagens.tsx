@@ -111,20 +111,22 @@ const mensagensIniciais: Record<number, Mensagem[]> = {
   ],
 };
 
-
 export default function Mensagens() {
   const { idioma } = useIdioma();
   const t = textos[idioma].mensagens;
 
   const [conversas, setConversas] = useState<Conversa[]>(() => {
     const data = localStorage.getItem(STORAGE_CONVERSAS);
-    return data ? JSON.parse(data) : t.initialConversations;
+    return data ? JSON.parse(data) : conversasIniciais;
   });
+
   const [chatAtivo, setChatAtivo] = useState<number | null>(1);
+
   const [mensagens, setMensagens] = useState<Record<number, Mensagem[]>>(() => {
     const data = localStorage.getItem(STORAGE_MENSAGENS);
-    return data ? JSON.parse(data) : t.initialMessages;
+    return data ? JSON.parse(data) : mensagensIniciais;
   });
+
   const [novaMensagem, setNovaMensagem] = useState("");
   const [busca, setBusca] = useState("");
   const [mostrandoNovoChat, setMostrandoNovoChat] = useState(false);
