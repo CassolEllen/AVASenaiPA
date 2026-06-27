@@ -47,6 +47,19 @@ export const textos = {
       viewClass: "Ver aula",
       meetAction: "Entrar no Meet",
       progressCompleted: "curaço geral",
+
+            exam: {
+        title: "Prova disponível",
+        startButton: "Iniciar prova",
+        modalTitle: "Acesso à prova",
+        modalDescription:
+          "Informe o código de acesso fornecido pelo professor para iniciar a prova.",
+        codePlaceholder: "Código de acesso",
+        codeRequired: "Informe o código de acesso.",
+        codeInvalid: "Código inválido. Verifique com o professor e tente novamente.",
+        validating: "Validando...",
+        confirmButton: "Acessar prova",
+      },
     },
     aulas: {
       title: "Aulas",
@@ -474,6 +487,18 @@ export const textos = {
       viewClass: "View class",
       meetAction: "Join Meet",
       progressCompleted: "overall progress",
+            exam: {
+        title: "Exam available",
+        startButton: "Start exam",
+        modalTitle: "Exam access",
+        modalDescription:
+          "Enter the access code provided by your teacher to start the exam.",
+        codePlaceholder: "Access code",
+        codeRequired: "Enter the access code.",
+        codeInvalid: "Invalid code. Check with your teacher and try again.",
+        validating: "Validating...",
+        confirmButton: "Access exam",
+      },
     },
     aulas: {
       title: "Classes",

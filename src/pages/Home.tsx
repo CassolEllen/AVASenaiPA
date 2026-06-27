@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   BookOpen,
   CalendarDays,
@@ -6,15 +7,47 @@ import {
   Video,
   ArrowRight,
   TrendingUp,
+  ShieldCheck,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useIdioma } from "../hooks/useIdioma";
 import { textos } from "../i18n";
+import Modal from "../components/Modal";
+import { provaDisponivel, validarCodigoAcesso } from "../lib/provas";
 
 export default function Home() {
   const navigate = useNavigate();
   const { idioma } = useIdioma();
   const t = textos[idioma].home;
+
+  const [provaModalAberto, setProvaModalAberto] = useState(false);
+  const [codigo, setCodigo] = useState("");
+  const [validando, setValidando] = useState(false);
+  const [erroCodigo, setErroCodigo] = useState<string | null>(null);
+
+  async function handleIniciarProva() {
+    if (!codigo.trim()) {
+      setErroCodigo(t.exam.codeRequired);
+      return;
+    }
+
+    setValidando(true);
+    setErroCodigo(null);
+
+    const valido = await validarCodigoAcesso(provaDisponivel.id, codigo);
+
+    setValidando(false);
+
+    if (!valido) {
+      setErroCodigo(t.exam.codeInvalid);
+      return;
+    }
+
+    sessionStorage.setItem(`prova-desbloqueada-${provaDisponivel.id}`, "1");
+    setProvaModalAberto(false);
+    setCodigo("");
+    navigate(`/prova/${provaDisponivel.id}`);
+  }
 
   return (
     <div className="max-w-[1400px] mx-auto space-y-6 animate-fade-in">
@@ -32,6 +65,70 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section className="rounded-3xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-6 flex items-center justify-between gap-6 flex-wrap">
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 flex items-center justify-center">
+            <ShieldCheck size={22} />
+          </div>
+
+          <div>
+            <p className="text-sm font-semibold text-amber-800 dark:text-amber-300">
+              {t.exam.title}
+            </p>
+            <p className="text-lg font-bold text-slate-900 dark:text-white">
+              {provaDisponivel.titulo}
+            </p>
+            <p className="text-sm text-slate-500 dark:text-slate-400">
+              {provaDisponivel.disciplina} · {provaDisponivel.data} ·{" "}
+              {provaDisponivel.janela}
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={() => setProvaModalAberto(true)}
+          className="bg-amber-600 text-white px-5 py-3 rounded-xl font-semibold hover:bg-amber-700 active:scale-[0.98] transition"
+        >
+          {t.exam.startButton}
+        </button>
+      </section>
+
+      <Modal
+        open={provaModalAberto}
+        onClose={() => {
+          setProvaModalAberto(false);
+          setErroCodigo(null);
+          setCodigo("");
+        }}
+        title={t.exam.modalTitle}
+      >
+        <p className="text-sm text-slate-500 dark:text-slate-400">
+          {t.exam.modalDescription}
+        </p>
+
+        <input
+          type="text"
+          value={codigo}
+          onChange={(e) => setCodigo(e.target.value)}
+          placeholder={t.exam.codePlaceholder}
+          className="w-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white tracking-widest uppercase focus:outline-none focus:ring-2 focus:ring-blue-600"
+        />
+
+        {erroCodigo && (
+          <p className="text-sm text-red-600 dark:text-red-400">
+            {erroCodigo}
+          </p>
+        )}
+
+        <button
+          onClick={handleIniciarProva}
+          disabled={validando}
+          className="w-full bg-blue-700 text-white py-3 rounded-xl font-semibold hover:bg-blue-800 active:scale-[0.98] transition disabled:opacity-50"
+        >
+          {validando ? t.exam.validating : t.exam.confirmButton}
+        </button>
+      </Modal>
 
       <section className="grid grid-cols-4 gap-5">
         <DashboardCard

@@ -9,6 +9,7 @@ import Cursos from "./pages/Cursos";
 import CursoDetalhe from "./pages/CursoDetalhe";
 import Atividades from "./pages/Atividades";
 import AtividadeDetalhe from "./pages/AtividadeDetalhe";
+import Prova from "./pages/Prova";
 import Mensagens from "./pages/Mensagens";
 import Calendario from "./pages/Calendario";
 import Notificacoes from "./pages/Notificacoes";
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="/cursos/:id" element={<CursoDetalhe />} />
           <Route path="/atividades" element={<Atividades />} />
           <Route path="/atividades/:id" element={<AtividadeDetalhe />} />
+          <Route path="/prova/:id" element={<Prova />} />
           <Route path="/mensagens" element={<Mensagens />} />
           <Route path="/calendario" element={<Calendario />} />
           <Route path="/notificacoes" element={<Notificacoes />} />
