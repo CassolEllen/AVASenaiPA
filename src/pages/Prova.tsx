@@ -93,9 +93,9 @@ export default function Prova() {
     navigate("/", { replace: true });
   }
 
-  if (etapa === "resultado") {
+    if (etapa === "resultado") {
     return (
-      <div className="max-w-[800px] mx-auto">
+      <div className="max-w-[800px] mx-auto space-y-6">
         <div className="bg-white dark:bg-slate-800 rounded-3xl p-10 shadow-[0_8px_30px_rgba(15,23,42,0.08)] border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center gap-3">
           <CheckCircle2 size={48} className="text-green-600" />
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
@@ -114,14 +114,73 @@ export default function Prova() {
           <p className="text-sm text-slate-500 dark:text-slate-400">
             Suas respostas foram registradas.
           </p>
-
-          <button
-            onClick={handleFechar}
-            className="mt-2 bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-800 active:scale-[0.98] transition"
-          >
-            Fechar
-          </button>
         </div>
+
+        <div className="space-y-3">
+          <h2 className="font-bold text-slate-900 dark:text-white">
+            Gabarito
+          </h2>
+
+          {prova.questoes.map((questao, index) => {
+            const respostaAluno = respostas[questao.id];
+            const acertou = respostaAluno === questao.correta;
+            const semResposta = respostaAluno === undefined;
+
+            return (
+              <div
+                key={questao.id}
+                className="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-100 dark:border-slate-700 space-y-2"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <p className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                    {index + 1}. {questao.enunciado}
+                  </p>
+
+                  <span
+                    className={`text-xs font-semibold px-3 py-1 rounded-full shrink-0 ${
+                      acertou
+                        ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300"
+                        : "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300"
+                    }`}
+                  >
+                    {acertou ? "Certa" : "Errada"}
+                  </span>
+                </div>
+
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  Sua resposta:{" "}
+                  <span
+                    className={
+                      acertou
+                        ? "text-green-700 dark:text-green-300 font-medium"
+                        : "text-red-600 dark:text-red-400 font-medium"
+                    }
+                  >
+                    {semResposta
+                      ? "Não respondida"
+                      : questao.opcoes[respostaAluno]}
+                  </span>
+                </p>
+
+                {!acertou && (
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                    Resposta correta:{" "}
+                    <span className="text-green-700 dark:text-green-300 font-medium">
+                      {questao.opcoes[questao.correta]}
+                    </span>
+                  </p>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        <button
+          onClick={handleFechar}
+          className="w-full bg-blue-700 text-white py-3 rounded-xl font-semibold hover:bg-blue-800 active:scale-[0.98] transition"
+        >
+          Fechar
+        </button>
       </div>
     );
   }
